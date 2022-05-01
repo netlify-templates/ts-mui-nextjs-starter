@@ -1,0 +1,90 @@
+model: PageLayout
+presets:
+  - label: Empty page
+    thumbnail: images/page-empty.png
+    data:
+      title: Empty page
+      sections:
+        - type: HeroSection
+          title: This Is an Empty Page
+          text: >
+            Start adding sections by clicking the + button on the page or through the
+            sidebar.
+  - label: Landing
+    thumbnail: images/page-landing.png
+    data:
+      title: Landing
+      sections:
+        - type: HeroSection
+          title: This Is A Big Hero Headline
+          text: >
+            Aenean eros ipsum, interdum quis dignissim non, sollicitudin vitae nisl.
+            Aenean vel aliquet elit, at blandit ipsum. Sed eleifend felis sit amet
+            erat molestie, hendrerit malesuada justo ultrices. Nunc volutpat at erat
+            itae interdum. Ut nec massa eget lorem blandit condimentum et at risus.
+          actions:
+            - type: Button
+              label: Get Started
+              url: '/'
+              size: large
+              variant: contained
+              color: primary
+            - type: Button
+              label: Learn More
+              url: '/'
+              size: large
+              variant: outlined
+              color: primary
+          image:
+            - type: Image
+              url: https://assets.stackbit.com/components/images/default/hero.png
+              altText: Hero section image
+        - type: CardsSection
+          title: Featured Items
+          subtitle: The section subtitle
+          items:
+            - type: Card
+              title: First Item Title
+              image:
+                type: Image
+                url: /images/hero.png
+                altText: First item image
+              text: >
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                commodo consequat.
+              actions:
+                - type: Button
+                  label: Learn more
+                  url: /
+            - type: Card
+              title: Second Item Title
+              image:
+                type: Image
+                url: /images/hero.png
+                altText: Second item image
+              text: >
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                commodo consequat.
+              actions:
+                - type: Button
+                  label: Learn more
+                  url: /
+            - type: Card
+              title: Third Item Title
+              image:
+                type: Image
+                url: /images/hero.png
+                altText: Third item image
+              text: >
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                commodo consequat.
+              actions:
+                - type: Button
+                  label: Learn more
+                  url: /

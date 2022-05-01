@@ -1,0 +1,50 @@
+{
+    "type": "Config",
+    "favicon": "/images/favicon.svg",
+    "header": {
+        "title": "MUI Starter",
+        "navLinks": [
+            {
+                "type": "Link",
+                "label": "Home",
+                "url": "/",
+                "underline": "hover"
+            },
+            {
+                "type": "Link",
+                "label": "About",
+                "url": "/about",
+                "underline": "hover"
+            },
+            {
+                "type": "Link",
+                "label": "Documentation",
+                "url": "https://docs.stackbit.com/",
+                "underline": "hover"
+            }
+        ]
+    },
+    "footer": {
+        "copyrightText": "Powered by Stackbit.",
+        "navLinks": [
+            {
+                "type": "Link",
+                "label": "Home",
+                "underline": "hover",
+                "url": "/"
+            },
+            {
+                "type": "Link",
+                "label": "About",
+                "underline": "hover",
+                "url": "/about"
+            },
+            {
+                "type": "Link",
+                "label": "Documentation",
+                "underline": "hover",
+                "url": "https://docs.stackbit.com/"
+            }
+        ]
+    }
+}

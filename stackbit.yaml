@@ -1,0 +1,28 @@
+stackbitVersion: ~0.4.0
+ssgName: nextjs
+nodeVersion: '16'
+cmsName: git
+
+assets:
+  referenceType: static
+  staticDir: public
+  uploadDir: images
+  publicPath: /
+
+dataDir: content/data
+pagesDir: content/pages
+
+pageLayoutKey: type
+objectTypeKey: type
+styleObjectModelName: ThemeStyle
+
+contentModels:
+  PageLayout:
+    isPage: true
+    urlPath: '/{slug}'
+    newFilePath: '{slug}.md'
+
+modelsSource:
+  type: files
+  modelDirs:
+    - .stackbit/models

@@ -1,0 +1,28 @@
+model: HeroSection
+presets:
+  - label: Hero
+    thumbnail: images/hero.png
+    data:
+      title: This Is A Big Hero Headline
+      text: >
+        Aenean eros ipsum, interdum quis dignissim non, sollicitudin vitae nisl.
+        Aenean vel aliquet elit, at blandit ipsum. Sed eleifend felis sit amet
+        erat molestie, hendrerit malesuada justo ultrices. Nunc volutpat at erat
+        itae interdum. Ut nec massa eget lorem blandit condimentum et at risus.
+      actions:
+        - type: Button
+          label: Get Started
+          url: '/'
+          size: large
+          variant: contained
+          color: primary
+        - type: Button
+          label: Learn More
+          url: '/'
+          size: large
+          variant: outlined
+          color: primary
+      image:
+        type: Image
+        url: /images/hero.png
+        altText: Hero section image
