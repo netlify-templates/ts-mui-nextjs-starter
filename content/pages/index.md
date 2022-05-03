@@ -3,13 +3,12 @@ title: Home
 type: PageLayout
 sections:
   - type: HeroSection
-    title: Stackbit MUI5 and Next.js starter
-    subtitle: Use it as a starting point for your company project.
+    title: Stackbit starter
+    subtitle: 'Featuring TypeScript, Next.js, MUI v5 & Emotion'
     text: >
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-      commodo consequat.
+      This is the HeroSection component. You can visually edit this component &
+      add more sections while developing locally. [Learn
+      more.](https://docs.stackbit.com/how-to-guides/local-development/)
     actions:
       - type: Button
         label: Start Building
@@ -28,8 +27,8 @@ sections:
       url: /images/hero.png
       altText: Hero section image
   - type: CardsSection
-    title: Cards Section Title
-    subtitle: The subtitle of the cards section
+    title: CardsSection Component
+    subtitle: Section subtitle here
     items:
       - type: Card
         title: First Card Title

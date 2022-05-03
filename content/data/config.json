@@ -2,7 +2,7 @@
     "type": "Config",
     "favicon": "/images/favicon.svg",
     "header": {
-        "title": "MUI Starter",
+        "title": "TypeScript + MUI Starter",
         "navLinks": [
             {
                 "type": "Link",

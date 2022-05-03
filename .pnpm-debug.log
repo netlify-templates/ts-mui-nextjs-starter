@@ -1,0 +1,23 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 1
+  },
+  "1 info pnpm": {
+    "err": {
+      "name": "Error",
+      "message": "not found: u",
+      "code": "ENOENT",
+      "stack": "Error: not found: u\n    at getNotFoundError (/Users/eladrosenheim/.nvm/versions/node/v14.19.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.3/node_modules/pnpm/dist/pnpm.cjs:41585:51)\n    at Function.whichSync [as sync] (/Users/eladrosenheim/.nvm/versions/node/v14.19.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.3/node_modules/pnpm/dist/pnpm.cjs:41662:13)\n    at getCommandAbsolutePathSync (/Users/eladrosenheim/.nvm/versions/node/v14.19.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.3/node_modules/pnpm/dist/pnpm.cjs:43227:44)\n    at default_1 (/Users/eladrosenheim/.nvm/versions/node/v14.19.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.3/node_modules/pnpm/dist/pnpm.cjs:43236:32)\n    at /Users/eladrosenheim/.nvm/versions/node/v14.19.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.3/node_modules/pnpm/dist/pnpm.cjs:178180:39"
+    }
+  },
+  "2 error pnpm": {
+    "code": "ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL",
+    "prefix": "/Users/eladrosenheim/Documents/GitHub/mui-nextjs-starter",
+    "err": {
+      "name": "pnpm",
+      "message": "not found: u",
+      "code": "ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL",
+      "stack": "Error: not found: u\n    at getNotFoundError (/Users/eladrosenheim/.nvm/versions/node/v14.19.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.3/node_modules/pnpm/dist/pnpm.cjs:41585:51)\n    at Function.whichSync [as sync] (/Users/eladrosenheim/.nvm/versions/node/v14.19.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.3/node_modules/pnpm/dist/pnpm.cjs:41662:13)\n    at getCommandAbsolutePathSync (/Users/eladrosenheim/.nvm/versions/node/v14.19.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.3/node_modules/pnpm/dist/pnpm.cjs:43227:44)\n    at default_1 (/Users/eladrosenheim/.nvm/versions/node/v14.19.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.3/node_modules/pnpm/dist/pnpm.cjs:43236:32)\n    at /Users/eladrosenheim/.nvm/versions/node/v14.19.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.3/node_modules/pnpm/dist/pnpm.cjs:178180:39"
+    }
+  }
+}
