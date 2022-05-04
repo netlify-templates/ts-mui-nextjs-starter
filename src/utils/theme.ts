@@ -5,10 +5,10 @@ let theme = createTheme({
   palette: {
     mode: themeStyle.mode ?? 'light',
     primary: {
-      main: themeStyle.primaryColor ?? '#2196f3',
+      main: themeStyle.primaryColor ?? '#1F2B9D',
     },
     secondary: {
-      main: themeStyle.secondaryColor ?? '#f50057',
+      main: themeStyle.secondaryColor ?? '#F65458',
     }
   },
 });
