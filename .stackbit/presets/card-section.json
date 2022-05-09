@@ -14,7 +14,7 @@
                         "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ante lorem, tincidunt ac leo efficitur, feugiat tempor odio. Maecenas pharetra ipsum dolor, et iaculis elit ornare ac.",
                         "image": {
                             "type": "Image",
-                            "url": "/images/nextjs.png",
+                            "url": "/images/nextjs.svg",
                             "altText": "First item image"
                         },
                         "actions": [
@@ -31,7 +31,7 @@
                         "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ante lorem, tincidunt ac leo efficitur, feugiat tempor odio. Maecenas pharetra ipsum dolor, et iaculis elit ornare ac.",
                         "image": {
                             "type": "Image",
-                            "url": "/images/mui-5.png",
+                            "url": "/images/mui-5.svg",
                             "altText": "Second item image"
                         },
                         "actions": [
@@ -48,7 +48,7 @@
                         "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ante lorem, tincidunt ac leo efficitur, feugiat tempor odio. Maecenas pharetra ipsum dolor, et iaculis elit ornare ac.",
                         "image": {
                             "type": "Image",
-                            "url": "/images/ts.png",
+                            "url": "/images/ts.svg",
                             "altText": "Third item image"
                         },
                         "actions": [

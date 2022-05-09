@@ -14,7 +14,7 @@ export const Button: React.FC<Props> = (props) => {
 
     return (
         <NextLink href={url} passHref>
-            <MuiButton className={className} variant={variant} size={size} color={color} sx={{ ...sx }} {...toFieldPath(...annotations)}>
+            <MuiButton className={className} variant={variant} size={size} color={color} sx={{borderRadius: '2px', ...sx }} {...toFieldPath(...annotations)}>
                 <span {...toFieldPath('.label')}>{label}</span>
             </MuiButton>
         </NextLink>

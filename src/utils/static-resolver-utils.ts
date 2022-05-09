@@ -1,7 +1,10 @@
 import path from 'path';
 import * as types from 'types';
 
-import { PageProps, AllPageLayoutProps } from '../components/layouts';
+export type PageProps = {
+    site: types.Config & { env?: Record<string, string> };
+    page: types.PageLayout;
+};
 
 export function findPageLayouts(documents: types.DocumentTypes[]) {
     return documents.filter(isPageLayout);
@@ -18,7 +21,7 @@ export function isConfig(document: types.DocumentTypes): document is types.Confi
     return document.type === 'Config';
 }
 
-export function toPageProps<T extends AllPageLayoutProps>(pageLayoutProps: T, urlPath: string, documents: types.DocumentTypes[]): PageProps<T> {
+export function toPageProps(pageLayoutProps: types.PageLayout, urlPath: string, documents: types.DocumentTypes[]) : PageProps {
     const config = findConfig(documents)!;
 
     return {
@@ -34,7 +37,7 @@ export function toPageProps<T extends AllPageLayoutProps>(pageLayoutProps: T, ur
                 ...pageLayoutProps.__metadata,
                 urlPath
             }
-        } as T
+        }
     };
 }
 

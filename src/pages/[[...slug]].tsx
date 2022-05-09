@@ -1,22 +1,46 @@
 import { FC } from 'react';
+import Head from 'next/head';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { sourcebitDataClient } from 'sourcebit-target-next';
 import { hotContentReload } from 'sourcebit-target-next/hot-content-reload';
-
-import type { PageProps } from '../components/layouts';
-import { BaseLayout } from '../components/layouts/BaseLayout';
-import { PageLayout, Props as PageLayoutProps } from '../components/layouts/PageLayout';
+import { toObjectId, toFieldPath } from '@stackbit/annotations';
+import { Header } from '../components/sections/Header';
+import { Footer } from '../components/sections/Footer';
+import { DynamicComponent } from '../components/DynamicComponent';
 import { findPageLayouts, toPageProps, urlPathForDocument } from '../utils/static-resolver-utils';
-import { mapProps as mapPageLayoutProps } from '../components/layouts/PageLayout/mapProps';
+import * as types from 'types';
 
-export type Props = PageProps<PageLayoutProps>;
+import MuiBox from '@mui/material/Box';
+import MuiContainer from '@mui/material/Container';
+
+export type Props = {
+    site: types.Config & { env?: Record<string, string> };
+    page: types.PageLayout;
+};
 
 const Page: FC<Props> = (props) => {
     const { page, site } = props;
+    const siteMeta = site?.__metadata;
+    const pageMeta = page?.__metadata;
     return (
-        <BaseLayout site={site} page={page}>
-            <PageLayout {...page} />
-        </BaseLayout>
+        <MuiBox sx={{ px: 3 }} {...toObjectId(pageMeta?.id)}>
+            <MuiContainer maxWidth="lg" disableGutters={true} sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+                <Head>
+                    <title>{page.title}</title>
+                    <meta name="viewport" content="width=device-width, initial-scale=1" />
+                    {site.favicon && <link rel="icon" href={site.favicon} />}
+                </Head>
+                {site.header && <Header {...site.header} {...toObjectId(siteMeta?.id)} />}
+                {(page.sections ?? []).length > 0 && (
+                    <MuiBox component="main" sx={{ flexGrow: 1 }} {...toFieldPath('sections')}>
+                        {(page.sections ?? []).map((section, index) => (
+                            <DynamicComponent key={index} {...section} {...toFieldPath(`sections.${index}`)} />
+                        ))}
+                    </MuiBox>
+                )}
+                {site.footer && <Footer {...site.footer} {...toObjectId(siteMeta?.id)} />}
+            </MuiContainer>
+        </MuiBox>
     );
 };
 
@@ -35,7 +59,6 @@ export const getStaticProps: GetStaticProps<Props, { slug: string[] }> = async (
     const documents = data.objects;
     const urlPath = '/' + (params?.slug || []).join('/');
     const page = findPageLayouts(documents).find((page) => urlPathForDocument(page) === urlPath)!;
-    const pageLayoutProps = await mapPageLayoutProps(page, documents);
-    const props = toPageProps(pageLayoutProps, urlPath, documents);
+    const props = toPageProps(page, urlPath, documents);
     return { props };
 };
