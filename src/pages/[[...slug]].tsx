@@ -4,21 +4,19 @@ import { GetStaticPaths, GetStaticProps } from 'next';
 import { sourcebitDataClient } from 'sourcebit-target-next';
 import { hotContentReload } from 'sourcebit-target-next/hot-content-reload';
 import { toObjectId, toFieldPath } from '@stackbit/annotations';
-import type * as types from 'types';
-
-import type { PageProps } from '../components/layouts';
 import { Header } from '../components/sections/Header';
 import { Footer } from '../components/sections/Footer';
 import { DynamicComponent } from '../components/DynamicComponent';
-
-
 import { findPageLayouts, toPageProps, urlPathForDocument } from '../utils/static-resolver-utils';
+import * as types from 'types';
 
 import MuiBox from '@mui/material/Box';
 import MuiContainer from '@mui/material/Container';
 
-export type PageLayoutProps = types.PageLayout;
-export type Props = PageProps<PageLayoutProps>;
+export type Props = {
+    site: types.Config & { env?: Record<string, string> };
+    page: types.PageLayout;
+};
 
 const Page: FC<Props> = (props) => {
     const { page, site } = props;
