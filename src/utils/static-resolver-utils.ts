@@ -1,10 +1,6 @@
 import path from 'path';
 import * as types from 'types';
-
-export type PageProps = {
-    site: types.Config & { env?: Record<string, string> };
-    page: types.PageLayout;
-};
+import { Props as PageProps } from '../pages/[[...slug]]';
 
 export function findPageLayouts(documents: types.DocumentTypes[]) {
     return documents.filter(isPageLayout);
