@@ -18,7 +18,7 @@ const Page: FC<Props> = (props) => {
     const pageMeta = page?.__metadata;
     return (
         <MuiBox sx={{ px: 3 }} {...toObjectId(pageMeta?.id)}>
-            <MuiContainer maxWidth="lg" disableGutters={true} sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+            <MuiContainer maxWidth="lg" disableGutters={true}>
                 <Head>
                     <title>{page.title}</title>
                     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -26,7 +26,7 @@ const Page: FC<Props> = (props) => {
                 </Head>
                 {site.header && <Header {...site.header} {...toObjectId(siteMeta?.id)} />}
                 {(page.sections ?? []).length > 0 && (
-                    <MuiBox component="main" sx={{ flexGrow: 1 }} {...toFieldPath('sections')}>
+                    <MuiBox component="main" {...toFieldPath('sections')}>
                         {(page.sections ?? []).map((section, index) => (
                             <DynamicComponent key={index} {...section} {...toFieldPath(`sections.${index}`)} />
                         ))}
