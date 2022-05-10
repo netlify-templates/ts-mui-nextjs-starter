@@ -7,16 +7,10 @@ import { toObjectId, toFieldPath } from '@stackbit/annotations';
 import { Header } from '../components/sections/Header';
 import { Footer } from '../components/sections/Footer';
 import { DynamicComponent } from '../components/DynamicComponent';
-import { findPageLayouts, toPageProps, urlPathForDocument } from '../utils/static-resolver-utils';
-import * as types from 'types';
+import { PageProps as Props, findPageLayouts, toPageProps, urlPathForDocument } from '../utils/static-resolver-utils';
 
 import MuiBox from '@mui/material/Box';
 import MuiContainer from '@mui/material/Container';
-
-export type Props = {
-    site: types.Config & { env?: Record<string, string> };
-    page: types.PageLayout;
-};
 
 const Page: FC<Props> = (props) => {
     const { page, site } = props;
