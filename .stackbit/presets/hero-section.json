@@ -9,7 +9,7 @@
                 "text": "Aenean eros ipsum, interdum quis dignissim non, sollicitudin vitae nisl. Aenean vel aliquet elit, at blandit ipsum. Sed eleifend felis sit amet erat molestie, hendrerit malesuada justo ultrices. Nunc volutpat at erat itae interdum. Ut nec massa eget lorem blandit condimentum et at risus.",
                 "image": {
                     "type": "Image",
-                    "url": "/images/hero.png",
+                    "url": "/images/hero.svg",
                     "altText": "Hero section image"
                 },
                 "actions": [
