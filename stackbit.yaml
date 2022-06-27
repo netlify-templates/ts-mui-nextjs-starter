@@ -17,7 +17,7 @@ objectTypeKey: type
 styleObjectModelName: ThemeStyle
 
 contentModels:
-  PageLayout:
+  Page:
     isPage: true
     urlPath: '/{slug}'
     newFilePath: '{slug}.md'

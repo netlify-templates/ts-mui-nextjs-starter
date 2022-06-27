@@ -1,29 +1,27 @@
-import { FC } from 'react';
+import * as React from 'react';
 import Head from 'next/head';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import { sourcebitDataClient } from 'sourcebit-target-next';
-import { hotContentReload } from 'sourcebit-target-next/hot-content-reload';
+import type * as types from 'types';
+import { DynamicComponent } from '../components/DynamicComponent';
 import { Header } from '../components/sections/Header';
 import { Footer } from '../components/sections/Footer';
-import { DynamicComponent } from '../components/DynamicComponent';
-import { PageProps as Props, findPageLayouts, toPageProps, urlPathForDocument } from '../utils/static-resolver-utils';
+import { pagesByType, siteConfig, urlToContent } from '../utils/content';
 
 import MuiBox from '@mui/material/Box';
 import MuiContainer from '@mui/material/Container';
 
-const Page: FC<Props> = (props) => {
-    const { page, site } = props;
-    const siteMeta = site?.__metadata;
-    const pageMeta = page?.__metadata;
+export type Props = { page: types.Page; siteConfig: types.Config; };
+
+const Page: React.FC<Props> = ({ page, siteConfig }) => {
     return (
-        <MuiBox sx={{ px: 3 }} data-sb-object-id={pageMeta?.id}>
+        <MuiBox sx={{ px: 3 }} data-sb-object-id={page.__id}>
             <MuiContainer maxWidth="lg" disableGutters={true}>
                 <Head>
                     <title>{page.title}</title>
                     <meta name="viewport" content="width=device-width, initial-scale=1" />
-                    {site.favicon && <link rel="icon" href={site.favicon} />}
+                    {siteConfig.favicon && <link rel="icon" href={siteConfig.favicon} />}
                 </Head>
-                {site.header && <Header {...site.header} data-sb-object-id={siteMeta?.id} />}
+                {siteConfig.header && <Header {...siteConfig.header} data-sb-object-id={siteConfig.__id} />}
                 {(page.sections ?? []).length > 0 && (
                     <MuiBox component="main" data-sb-field-path="sections">
                         {(page.sections ?? []).map((section, index) => (
@@ -31,27 +29,23 @@ const Page: FC<Props> = (props) => {
                         ))}
                     </MuiBox>
                 )}
-                {site.footer && <Footer {...site.footer} data-sb-object-id={siteMeta?.id} />}
+                {siteConfig.footer && <Footer {...siteConfig.footer} data-sb-object-id={siteConfig.__id} />}
             </MuiContainer>
         </MuiBox>
     );
 };
 
-const withHotContentReload = hotContentReload({ disable: process.env.NODE_ENV === 'production' });
-export default withHotContentReload(Page);
+export default Page;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const data = await sourcebitDataClient.getData();
-    const documents = data.objects;
-    const paths = findPageLayouts(documents).map((page) => urlPathForDocument(page));
-    return { paths, fallback: false };
+    const pages = pagesByType('Page');
+    return {
+        paths: Object.keys(pages),
+        fallback: false
+    };
 };
 
 export const getStaticProps: GetStaticProps<Props, { slug: string[] }> = async ({ params }) => {
-    const data = await sourcebitDataClient.getData();
-    const documents = data.objects;
-    const urlPath = '/' + (params?.slug || []).join('/');
-    const page = findPageLayouts(documents).find((page) => urlPathForDocument(page) === urlPath)!;
-    const props = toPageProps(page, urlPath, documents);
-    return { props };
+    const url = '/' + (params?.slug || []).join('/');
+    return { props: { page: urlToContent(url), siteConfig: siteConfig() } };
 };

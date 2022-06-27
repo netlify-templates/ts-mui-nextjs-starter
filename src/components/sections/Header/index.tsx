@@ -1,12 +1,11 @@
 import * as React from 'react';
 import type * as types from 'types';
+import { Link } from '../../atoms/Link';
 
 import MuiAppBar from '@mui/material/AppBar';
 import MuiBox from '@mui/material/Box';
 import MuiToolbar from '@mui/material/Toolbar';
 import MuiTypography from '@mui/material/Typography';
-
-import { Link } from '../../atoms/Link';
 
 export type Props = types.Header & types.StackbitObjectId;
 

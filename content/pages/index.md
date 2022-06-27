@@ -1,6 +1,6 @@
 ---
 title: Home
-type: PageLayout
+type: Page
 sections:
   - type: HeroSection
     title: Stackbit starter
