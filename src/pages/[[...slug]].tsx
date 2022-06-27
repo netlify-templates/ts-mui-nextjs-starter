@@ -3,7 +3,6 @@ import Head from 'next/head';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { sourcebitDataClient } from 'sourcebit-target-next';
 import { hotContentReload } from 'sourcebit-target-next/hot-content-reload';
-import { toObjectId, toFieldPath } from '@stackbit/annotations';
 import { Header } from '../components/sections/Header';
 import { Footer } from '../components/sections/Footer';
 import { DynamicComponent } from '../components/DynamicComponent';
@@ -17,22 +16,22 @@ const Page: FC<Props> = (props) => {
     const siteMeta = site?.__metadata;
     const pageMeta = page?.__metadata;
     return (
-        <MuiBox sx={{ px: 3 }} {...toObjectId(pageMeta?.id)}>
+        <MuiBox sx={{ px: 3 }} data-sb-object-id={pageMeta?.id}>
             <MuiContainer maxWidth="lg" disableGutters={true}>
                 <Head>
                     <title>{page.title}</title>
                     <meta name="viewport" content="width=device-width, initial-scale=1" />
                     {site.favicon && <link rel="icon" href={site.favicon} />}
                 </Head>
-                {site.header && <Header {...site.header} {...toObjectId(siteMeta?.id)} />}
+                {site.header && <Header {...site.header} data-sb-object-id={siteMeta?.id} />}
                 {(page.sections ?? []).length > 0 && (
-                    <MuiBox component="main" {...toFieldPath('sections')}>
+                    <MuiBox component="main" data-sb-field-path="sections">
                         {(page.sections ?? []).map((section, index) => (
-                            <DynamicComponent key={index} {...section} {...toFieldPath(`sections.${index}`)} />
+                            <DynamicComponent key={index} {...section} data-sb-field-path={`.${index}`} />
                         ))}
                     </MuiBox>
                 )}
-                {site.footer && <Footer {...site.footer} {...toObjectId(siteMeta?.id)} />}
+                {site.footer && <Footer {...site.footer} data-sb-object-id={siteMeta?.id} />}
             </MuiContainer>
         </MuiBox>
     );
