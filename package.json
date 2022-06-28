@@ -8,10 +8,9 @@
     "sideEffects": false,
     "scripts": {
         "dev": "next dev",
-        "build": "next build && next export",
+        "build": "next build",
         "start": "next start",
         "export": "next export",
-        "validate": "stackbit validate",
         "prettier": "prettier --write src"
     },
     "dependencies": {
