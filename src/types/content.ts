@@ -4,7 +4,7 @@ export type AllTypeNames = DocumentTypeNames | NestedTypeNames;
 export type DocumentTypes = Config | Page ;
 export type DocumentTypeNames =
     | 'Config'
-    | 'Page'
+    | 'Page';
 
 export type NestedTypes =
     | Button
@@ -92,7 +92,7 @@ export type HeroSection = {
     subtitle?: string;
     text?: string;
     actions?: Button[];
-    image?: Image ;
+    image?: Image;
 };
 
 export type Image = {
