@@ -4,7 +4,7 @@ module.exports = {
         autoPrerender: false
     },
     webpack: (config) => {
-        config.watchOptions.ignored.push('**/content/**');
+        config.watchOptions.ignored.push('/content/');
         return config;
     }
 };
