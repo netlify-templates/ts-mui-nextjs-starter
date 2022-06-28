@@ -1,6 +1,6 @@
 ---
 title: About
-type: PageLayout
+type: Page
 sections:
   - type: HeroSection
     title: Example for H2 headline

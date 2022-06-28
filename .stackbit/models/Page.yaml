@@ -1,6 +1,5 @@
-name: PageLayout
+name: Page
 label: Page
-layout: PageLayout
 hideContent: true
 thumbnail: https://assets.stackbit.com/components/models/thumbnails/default.png
 fields:

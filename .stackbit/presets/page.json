@@ -1,5 +1,5 @@
 {
-    "model": "PageLayout",
+    "model": "Page",
     "presets": [
         {
             "label": "Empty page",

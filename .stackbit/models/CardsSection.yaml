@@ -1,4 +1,3 @@
-type: object
 name: CardsSection
 label: Cards
 labelField: title
