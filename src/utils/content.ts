@@ -5,19 +5,11 @@ import glob from 'glob';
 import frontmatter from 'front-matter';
 import * as types from 'types';
 
-type SbConfigType = {
+type StackbitConfig = {
     [key: string]: any;
 };
 
-type ParsedMdType = {
-    attributes: { [key: string]: any };
-    body: string;
-    bodyBegin: number;
-    frontmatter: string;
-};
-
-export const sbConfig = yaml.load(fs.readFileSync('./stackbit.yaml', 'utf8')) as SbConfigType;
-
+export const sbConfig = yaml.load(fs.readFileSync('./stackbit.yaml', 'utf8')) as StackbitConfig;
 if (!sbConfig.pagesDir || !sbConfig.dataDir)
     throw new Error('Invalid Stackbit config file');
 
@@ -30,12 +22,12 @@ function contentFilesInPath(dir: string) {
     return glob.sync(globPattern);
 }
 
-function readContent(file: string) {
+function readContent(file: string): types.Document {
     const rawContent = fs.readFileSync(file, 'utf8');
     let content = null;
     switch (path.extname(file).substring(1)) {
         case 'md':
-            const parsedMd = frontmatter(rawContent) as ParsedMdType;
+            const parsedMd = frontmatter<Record<string, any>>(rawContent);
             content = {
                 ...parsedMd.attributes,
                 body: parsedMd.body
@@ -76,7 +68,7 @@ export function urlToContent(url: string) {
 }
 
 export function pagesByType(contentType: types.DocumentTypeNames) {
-    let result : { [key: string]: types.DocumentTypes }= {};
+    let result: Record<string, types.Document> = {};
     for (const [url, file] of urlToFilePairs()) {
         if (file) {
             const content = readContent(file);
@@ -87,5 +79,5 @@ export function pagesByType(contentType: types.DocumentTypeNames) {
 }
 
 export function siteConfig() {
-    return readContent(siteConfigFile);
+    return readContent(siteConfigFile) as types.Config;
 }

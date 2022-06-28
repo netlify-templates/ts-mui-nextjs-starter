@@ -13,7 +13,6 @@ dataDir: content/data
 pagesDir: content/pages
 
 pageLayoutKey: type
-objectTypeKey: type
 styleObjectModelName: ThemeStyle
 
 contentModels:

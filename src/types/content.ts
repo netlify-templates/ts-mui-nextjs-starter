@@ -1,39 +1,16 @@
-export type AllTypes = DocumentTypes | NestedTypes;
-export type AllTypeNames = DocumentTypeNames | NestedTypeNames;
-
-export type DocumentTypes = Config | Page ;
+export type Document = Config | Page ;
 export type DocumentTypeNames =
     | 'Config'
     | 'Page';
 
-export type NestedTypes =
-    | Button
-    | Card
-    | CardsSection
-    | Footer
-    | Header
-    | HeroSection
-    | Image
-    | Link;
-
-export type NestedTypeNames =
-    | 'Button'
-    | 'Card'
-    | 'CardsSection'
-    | 'Footer'
-    | 'Header'
-    | 'HeroSection'
-    | 'Image'
-    | 'Link';
-
-export type Sections =
+export type Section =
     | CardsSection
     | HeroSection;
 
 /** Document types */
 export type Config = {
     __id: string;
-    __url: string | null;
+    __url: null;
     type: 'Config';
     favicon?: string;
     header?: Header;
@@ -45,7 +22,7 @@ export type Page = {
     __url: string;
     type: 'Page';
     title: string;
-    sections?: Sections[];
+    sections?: Section[];
     body?: string;
 };
 

@@ -37,7 +37,7 @@ const Page: React.FC<Props> = ({ page, siteConfig }) => {
 
 export default Page;
 
-export const getStaticPaths: GetStaticPaths = async () => {
+export const getStaticPaths: GetStaticPaths = () => {
     const pages = pagesByType('Page');
     return {
         paths: Object.keys(pages),
@@ -45,7 +45,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
     };
 };
 
-export const getStaticProps: GetStaticProps<Props, { slug: string[] }> = async ({ params }) => {
+export const getStaticProps: GetStaticProps<Props, { slug: string[] }> =  ({ params }) => {
     const url = '/' + (params?.slug || []).join('/');
-    return { props: { page: urlToContent(url), siteConfig: siteConfig() } };
+    const page = urlToContent(url) as types.Page;
+    return { props: { page , siteConfig: siteConfig() } };
 };
