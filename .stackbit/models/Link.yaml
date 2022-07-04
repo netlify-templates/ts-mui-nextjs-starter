@@ -1,4 +1,3 @@
-type: object
 name: Link
 label: Link
 labelField: label

@@ -1,4 +1,4 @@
-stackbitVersion: ~0.4.0
+stackbitVersion: ~0.5.0
 ssgName: nextjs
 nodeVersion: '16'
 cmsName: git
@@ -13,11 +13,10 @@ dataDir: content/data
 pagesDir: content/pages
 
 pageLayoutKey: type
-objectTypeKey: type
 styleObjectModelName: ThemeStyle
 
 contentModels:
-  PageLayout:
+  Page:
     isPage: true
     urlPath: '/{slug}'
     newFilePath: '{slug}.md'

@@ -4,11 +4,10 @@
 /node_modules
 /.pnp
 .pnp.js
+pnpm-lock.yaml
 
 # stackbit
 .cache
-.sourcebit-nextjs-cache.json
-.stackbit/dynamic-components.js
 
 # testing
 /coverage
@@ -27,6 +26,7 @@ Thumbs.db
 
 # debug
 npm-debug.log*
+.pnpm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
@@ -40,5 +40,3 @@ yarn-error.log*
 # IDE
 *.code-workspace
 .idea
-
-.cache

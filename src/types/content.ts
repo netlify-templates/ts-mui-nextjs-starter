@@ -1,62 +1,33 @@
-export type Metadata = {
-    id: string;
-    urlPath: string;
-    relSourcePath: string;
-};
-
-export type AllTypes = DocumentTypes | NestedTypes;
-export type AllTypeNames = DocumentTypeNames | NestedTypeNames;
-
-export type DocumentTypes = Config | PageLayout ;
+export type Document = Config | Page ;
 export type DocumentTypeNames =
     | 'Config'
-    | 'PageLayout'
+    | 'Page';
 
-export type NestedTypes =
-    | Button
-    | Card
-    | CardsSection
-    | Footer
-    | Header
-    | HeroSection
-    | Image
-    | Link;
-
-export type NestedTypeNames =
-    | 'Button'
-    | 'Card'
-    | 'CardsSection'
-    | 'Footer'
-    | 'Header'
-    | 'HeroSection'
-    | 'Image'
-    | 'Link';
-
-export type Sections =
+export type Section =
     | CardsSection
     | HeroSection;
 
 /** Document types */
 export type Config = {
-    /** File path relative to `contentDirPath` */
-    __metadata: Metadata;
+    __id: string;
+    __url: null;
     type: 'Config';
     favicon?: string;
     header?: Header;
     footer?: Footer;
 };
 
-export type PageLayout = {
-    /** File path relative to `contentDirPath` */
-    __metadata: Metadata;
-    type: 'PageLayout';
+export type Page = {
+    __id: string;
+    __url: string;
+    type: 'Page';
     title: string;
-    sections?: Sections[];
+    sections?: Section[];
+    body?: string;
 };
 
 /** Nested types */
 export type Button = {
-    /** File path relative to `contentDirPath` */
     type: 'Button';
     label: string;
     url: string;
@@ -66,7 +37,6 @@ export type Button = {
 };
 
 export type Card = {
-    /** File path relative to `contentDirPath` */
     type: 'Card';
     title?: string;
     text?: string;
@@ -75,7 +45,6 @@ export type Card = {
 };
 
 export type CardsSection = {
-    /** File path relative to `contentDirPath` */
     type: 'CardsSection';
     title?: string;
     subtitle?: string;
@@ -83,38 +52,33 @@ export type CardsSection = {
 };
 
 export type Footer = {
-    /** File path relative to `contentDirPath` */
     type: 'Footer';
     copyrightText?: string;
     navLinks?: Link[];
 };
 
 export type Header = {
-    /** File path relative to `contentDirPath` */
     type: 'Header';
     title?: string;
     navLinks?: Link[];
 };
 
 export type HeroSection = {
-    /** File path relative to `contentDirPath` */
     type: 'HeroSection';
     title?: string;
     subtitle?: string;
     text?: string;
     actions?: Button[];
-    image?: Image ;
+    image?: Image;
 };
 
 export type Image = {
-    /** File path relative to `contentDirPath` */
     type: 'Image';
     url?: string;
     altText?: string;
 };
 
 export type Link = {
-    /** File path relative to `contentDirPath` */
     type: 'Link';
     label: string;
     url: string;
