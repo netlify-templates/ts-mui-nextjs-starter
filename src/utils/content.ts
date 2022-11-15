@@ -1,15 +1,10 @@
 import * as fs from 'fs';
 import path from 'path';
-import yaml from 'js-yaml';
 import glob from 'glob';
 import frontmatter from 'front-matter';
+import sbConfig from './../../stackbit.config';
 import * as types from 'types';
 
-type StackbitConfig = {
-    [key: string]: any;
-};
-
-export const sbConfig = yaml.load(fs.readFileSync('./stackbit.yaml', 'utf8')) as StackbitConfig;
 if (!sbConfig.pagesDir || !sbConfig.dataDir)
     throw new Error('Invalid Stackbit config file');
 
