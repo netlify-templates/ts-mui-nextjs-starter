@@ -1,12 +1,12 @@
 import { Button } from './.stackbit/models/Button';
 import { Card } from './.stackbit/models/Card';
-import { CardSection } from './.stackbit/models/CardSection';
+import { CardsSection } from './.stackbit/models/CardsSection';
 import { Config } from './.stackbit/models/Config';
 import { Footer } from './.stackbit/models/Footer';
 import { Header } from './.stackbit/models/Header';
-import { HearoSection } from './.stackbit/models/HeroSection';
+import { HeroSection } from './.stackbit/models/HeroSection';
 import { Image } from './.stackbit/models/Image';
-import { Links } from './.stackbit/models/Links';
+import { Link } from './.stackbit/models/Link';
 import { Page } from './.stackbit/models/Page';
 import { ThemeStyle } from './.stackbit/models/ThemeStyle';
 
@@ -28,13 +28,13 @@ const sbConfig = {
     models: {
         Button,
         Card,
-        CardSection,
+        CardsSection,
         Config,
         Footer,
         Header,
-        HearoSection,
+        HeroSection,
         Image,
-        Links,
+        Link,
         Page,
         ThemeStyle
     }

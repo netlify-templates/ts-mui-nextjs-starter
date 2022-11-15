@@ -1,4 +1,4 @@
-module.exports = {
+export const Card = {
     name: 'Card',
     label: 'Card',
     labelField: 'title',
@@ -28,4 +28,4 @@ module.exports = {
     ]
 };
 
-export {};
+

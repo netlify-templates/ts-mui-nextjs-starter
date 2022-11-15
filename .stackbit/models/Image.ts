@@ -1,4 +1,4 @@
-module.exports = {
+export const Image = {
     name: 'Image',
     label: 'Image',
     labelField: 'altText',
@@ -18,5 +18,3 @@ module.exports = {
             default: 'Image alt text'
         }]
 };
-
-export {};

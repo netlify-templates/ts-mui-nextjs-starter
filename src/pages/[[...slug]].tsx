@@ -10,7 +10,7 @@ import { pagesByType, siteConfig, urlToContent } from '../utils/content';
 import MuiBox from '@mui/material/Box';
 import MuiContainer from '@mui/material/Container';
 
-export type Props = { page: types.Page; siteConfig: types.Config; };
+export type Props = { page: types.Page; siteConfig: types.Config };
 
 const Page: React.FC<Props> = ({ page, siteConfig }) => {
     return (
@@ -45,8 +45,8 @@ export const getStaticPaths: GetStaticPaths = () => {
     };
 };
 
-export const getStaticProps: GetStaticProps<Props, { slug: string[] }> =  ({ params }) => {
+export const getStaticProps: GetStaticProps<Props, { slug: string[] }> = ({ params }) => {
     const url = '/' + (params?.slug || []).join('/');
     const page = urlToContent(url) as types.Page;
-    return { props: { page , siteConfig: siteConfig() } };
+    return { props: { page, siteConfig: siteConfig() } };
 };

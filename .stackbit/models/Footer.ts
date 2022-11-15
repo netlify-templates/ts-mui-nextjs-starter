@@ -1,4 +1,4 @@
-module.exports = {
+export const Footer = {
     name: 'Footer',
     label: 'Footer',
     labelField: 'copyrightText',
@@ -17,5 +17,3 @@ module.exports = {
         { type: 'markdown', name: 'copyrightText', label: 'Copyright text', default: 'Copyright text' }
     ]
 };
-
-export {};

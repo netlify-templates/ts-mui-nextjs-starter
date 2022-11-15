@@ -1,4 +1,4 @@
-module.exports = {
+export const Link =  {
     name: 'Link',
     label: 'Link',
     labelField: 'label',
@@ -35,4 +35,3 @@ module.exports = {
     ]
 };
 
-export {};

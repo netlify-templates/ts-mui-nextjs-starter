@@ -1,4 +1,4 @@
-module.exports = {
+export const ThemeStyle =  {
     type: 'data',
     name: 'ThemeStyle',
     label: 'Theme Style',
@@ -24,4 +24,3 @@ module.exports = {
     ]
 };
 
-export {};

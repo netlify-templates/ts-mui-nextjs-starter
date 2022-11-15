@@ -1,4 +1,4 @@
-module.exports = {
+export const Button = {
   name: 'Button',
   label: 'Button',
   labelField: 'label',
@@ -46,4 +46,3 @@ module.exports = {
        default: 'primary' } ]
 };
 
-export {};

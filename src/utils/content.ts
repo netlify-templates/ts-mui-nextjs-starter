@@ -5,8 +5,7 @@ import frontmatter from 'front-matter';
 import sbConfig from './../../stackbit.config';
 import * as types from 'types';
 
-if (!sbConfig.pagesDir || !sbConfig.dataDir)
-    throw new Error('Invalid Stackbit config file');
+if (!sbConfig.pagesDir || !sbConfig.dataDir) throw new Error('Invalid Stackbit config file');
 
 export const siteConfigFile = sbConfig.dataDir + '/config.json';
 

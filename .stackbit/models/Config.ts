@@ -1,4 +1,4 @@
-module.exports = {
+export const Config = {
     type: 'data',
     name: 'Config',
     label: 'Site configuration',
@@ -11,4 +11,3 @@ module.exports = {
     ]
 };
 
-export {};

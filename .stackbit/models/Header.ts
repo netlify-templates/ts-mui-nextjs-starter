@@ -1,4 +1,4 @@
-module.exports = {
+export const Header = {
     name: 'Header',
     label: 'Header',
     labelField: 'title',
@@ -17,5 +17,3 @@ module.exports = {
         }
     ]
 };
-
-export {};

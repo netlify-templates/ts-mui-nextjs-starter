@@ -1,4 +1,4 @@
-module.exports = {
+export const HeroSection =  {
     name: 'HeroSection',
     label: 'Hero',
     labelField: 'title',
@@ -34,4 +34,3 @@ module.exports = {
     ]
 };
 
-export {};
