@@ -1,5 +1,4 @@
 export const Button = {
-  name: 'Button',
   label: 'Button',
   labelField: 'label',
   fieldGroups: [ { name: 'styles', label: 'Styles' } ],

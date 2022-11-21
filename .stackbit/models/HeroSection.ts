@@ -1,5 +1,4 @@
 export const HeroSection =  {
-    name: 'HeroSection',
     label: 'Hero',
     labelField: 'title',
     thumbnail: 'https://assets.stackbit.com/components/models/thumbnails/default.png',

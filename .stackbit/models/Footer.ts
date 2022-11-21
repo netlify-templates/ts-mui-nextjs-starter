@@ -1,5 +1,4 @@
 export const Footer = {
-    name: 'Footer',
     label: 'Footer',
     labelField: 'copyrightText',
     readOnly: true,

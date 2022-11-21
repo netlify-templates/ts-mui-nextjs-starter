@@ -1,5 +1,4 @@
 export const Link =  {
-    name: 'Link',
     label: 'Link',
     labelField: 'label',
     fieldGroups: [{ name: 'styles', label: 'Styles' }],

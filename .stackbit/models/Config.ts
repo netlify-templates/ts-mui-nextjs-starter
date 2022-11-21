@@ -1,6 +1,5 @@
 export const Config = {
     type: 'data',
-    name: 'Config',
     label: 'Site configuration',
     singleInstance: true,
     readOnly: true,

@@ -1,5 +1,4 @@
 export const Header = {
-    name: 'Header',
     label: 'Header',
     labelField: 'title',
     readOnly: true,

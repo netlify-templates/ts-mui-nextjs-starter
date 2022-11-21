@@ -1,9 +1,7 @@
 export const Page =  {
     type: 'page',
-    name: 'Page',
     label: 'Page',
     urlPath: '/{slug}',
-    newFilePath: '{slug}.md',
     hideContent: true,
     thumbnail: 'https://assets.stackbit.com/components/models/thumbnails/default.png',
     fields: [

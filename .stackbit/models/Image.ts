@@ -1,5 +1,4 @@
 export const Image = {
-    name: 'Image',
     label: 'Image',
     labelField: 'altText',
     fields:

@@ -1,5 +1,4 @@
 export const Card = {
-    name: 'Card',
     label: 'Card',
     labelField: 'title',
     fields: [

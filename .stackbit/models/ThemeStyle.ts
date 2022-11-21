@@ -1,6 +1,5 @@
 export const ThemeStyle =  {
     type: 'data',
-    name: 'ThemeStyle',
     label: 'Theme Style',
     file: 'style.json',
     fields: [

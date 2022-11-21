@@ -1,5 +1,4 @@
 export const CardsSection =  {
-    name: 'CardsSection',
     label: 'Cards',
     labelField: 'title',
     thumbnail: 'https://assets.stackbit.com/components/models/thumbnails/default.png',
