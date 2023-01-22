@@ -11,10 +11,8 @@ export const Button: React.FC<Props> = (props) => {
     const annotations = fieldPath ? [fieldPath, `${fieldPath}.url#@href`].join(' ').trim() : null;
 
     return (
-        <NextLink href={url} passHref>
-            <MuiButton className={className} variant={variant} size={size} color={color} sx={{ borderRadius: '2px', ...sx }} data-sb-field-path={annotations}>
-                <span data-sb-field-path=".label">{label}</span>
-            </MuiButton>
-        </NextLink>
+        <MuiButton component={NextLink} href={url} className={className} variant={variant} size={size} color={color} sx={{ borderRadius: '2px', ...sx }} data-sb-field-path={annotations}>
+            <span data-sb-field-path=".label">{label}</span>
+        </MuiButton>
     );
 };

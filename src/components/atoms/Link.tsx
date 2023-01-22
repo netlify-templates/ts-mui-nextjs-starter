@@ -11,10 +11,8 @@ export const Link: React.FC<Props> = (props) => {
     const annotations = fieldPath ? [fieldPath, `${fieldPath}.url#@href`].join(' ').trim() : null;
 
     return (
-        <NextLink href={url} passHref>
-            <MuiLink className={className} underline={underline} color={color} sx={{ ...sx }} data-sb-field-path={annotations}>
-                <span data-sb-field-path=".label">{label}</span>
-            </MuiLink>
-        </NextLink>
+        <MuiLink component={NextLink} href={url} className={className} underline={underline} color={color} sx={{ ...sx }} data-sb-field-path={annotations}>
+            <span data-sb-field-path=".label">{label}</span>
+        </MuiLink>
     );
 };
