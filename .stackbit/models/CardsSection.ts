@@ -1,4 +1,8 @@
-export const CardsSection =  {
+import { Model } from "@stackbit/types";
+
+export const CardsSection: Model =  {
+    name: 'CardsSection',
+    type: 'object',
     label: 'Cards',
     labelField: 'title',
     thumbnail: 'https://assets.stackbit.com/components/models/thumbnails/default.png',

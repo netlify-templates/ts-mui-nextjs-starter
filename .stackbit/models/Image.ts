@@ -1,4 +1,8 @@
-export const Image = {
+import { Model } from "@stackbit/types";
+
+export const Image: Model = {
+    name: 'Image',
+    type: 'object',
     label: 'Image',
     labelField: 'altText',
     fields:

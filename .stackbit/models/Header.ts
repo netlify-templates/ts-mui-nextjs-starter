@@ -1,4 +1,8 @@
-export const Header = {
+import { Model } from "@stackbit/types";
+
+export const Header: Model = {
+    name: 'Header',
+    type: 'object',
     label: 'Header',
     labelField: 'title',
     readOnly: true,

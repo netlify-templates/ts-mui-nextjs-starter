@@ -1,4 +1,8 @@
-export const Button = {
+import { Model } from "@stackbit/types";
+
+export const Button: Model = {
+  name: 'Button',
+  type: 'object',
   label: 'Button',
   labelField: 'label',
   fieldGroups: [ { name: 'styles', label: 'Styles' } ],

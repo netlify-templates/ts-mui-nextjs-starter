@@ -41,3 +41,4 @@ yarn-error.log*
 # IDE
 *.code-workspace
 .idea
+.vscode

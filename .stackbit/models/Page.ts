@@ -1,6 +1,10 @@
-export const Page =  {
+import { Model } from "@stackbit/types";
+
+export const Page: Model =  {
+    name: 'Page',
     type: 'page',
     label: 'Page',
+    folder: 'pages',
     urlPath: '/{slug}',
     hideContent: true,
     thumbnail: 'https://assets.stackbit.com/components/models/thumbnails/default.png',

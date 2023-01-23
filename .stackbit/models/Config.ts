@@ -1,6 +1,10 @@
-export const Config = {
+import { Model } from "@stackbit/types";
+
+export const Config: Model = {
+    name: 'Config',
     type: 'data',
     label: 'Site configuration',
+    file: 'data/config.json',
     singleInstance: true,
     readOnly: true,
     fields: [
