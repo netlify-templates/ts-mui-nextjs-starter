@@ -11,13 +11,12 @@ import { Page } from './.stackbit/models/Page';
 import { ThemeStyle } from './.stackbit/models/ThemeStyle';
 import { defineStackbitConfig } from '@stackbit/types';
 import { FileSystemContentSource } from 'content-source';
-import path from 'path';
 
 const sbConfig = defineStackbitConfig({
     stackbitVersion: '~0.6.0',
     ssgName: 'nextjs',
     nodeVersion: '16',
-    dataDir: 'content/data',//TODO
+    dataDir: 'content/data', //TODO
     pagesDir: 'content/pages',
     contentSources: [
         new FileSystemContentSource({
@@ -31,7 +30,7 @@ const sbConfig = defineStackbitConfig({
                 publicPath: '/'
             }
         })
-    ],
+    ]
     // pageLayoutKey: 'type',
     // styleObjectModelName: 'ThemeStyle',
 

@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import path from 'path';
+import fse from 'fs-extra';
 import {
     Asset,
     Assets,
@@ -30,7 +31,7 @@ export class FileSystemContentSource implements ContentSourceInterface {
     private assets: Assets;
     private logger?: Logger;
 
-    constructor(options: { rootDir: string, contentDir: string; models: Model[]; assets: Assets }) {
+    constructor(options: { rootDir: string; contentDir: string; models: Model[]; assets: Assets }) {
         this.rootDir = options.rootDir;
         this.contentDir = options.contentDir;
         this.models = options.models;
@@ -87,8 +88,7 @@ export class FileSystemContentSource implements ContentSourceInterface {
 
     async getDocuments(options: { modelMap: ModelMap }): Promise<Document[]> {
         const filePaths = await utils.readDirRec(path.join(this.rootDir, this.contentDir));
-        console.log(this.contentDir, filePaths);
-        const result: Document[] = [];
+        const documents: Document[] = [];
         for (const filePath of filePaths) {
             const fullFilePath = path.join(this.rootDir, this.contentDir, filePath);
             const extension = path.extname(filePath).substring(1);
@@ -102,19 +102,51 @@ export class FileSystemContentSource implements ContentSourceInterface {
                 this.logger?.warn('Error loading file ' + filePath, err);
                 continue;
             }
-            const document = convertDocument(path.relative(this.rootDir, fullFilePath), data, options.modelMap);
+            const document = await convertDocument(path.relative(this.rootDir, fullFilePath), fullFilePath, data, options.modelMap);
             if (!document) {
                 this.logger?.warn('Error converting file ' + filePath);
                 continue;
             }
-            result.push(document);
+            documents.push(document);
         }
-        console.log(JSON.stringify(result, null, 2));
-        return result;
+        return documents;
     }
 
     async getAssets(): Promise<Asset[]> {
-        return [];
+        const assetsDir = path.join(
+            this.rootDir,
+            this.assets.referenceType === 'static' ? this.assets.staticDir : this.assets.assetsDir ?? this.assets.staticDir
+        );
+        const filePaths = await utils.readDirRec(assetsDir);
+        const assets: Asset[] = [];
+        for (const filePath of filePaths) {
+            let fileStats: fse.Stats | null = null;
+            try {
+                fileStats = await fse.stat(path.join(this.rootDir, filePath));
+            } catch (err) {}
+            assets.push({
+                type: 'asset',
+                id: filePath,
+                context: {},
+                createdAt: (fileStats?.birthtime ?? new Date()).toISOString(),
+                updatedAt: (fileStats?.mtime ?? new Date()).toISOString(),
+                manageUrl: '',
+                status: 'published',
+                fields: {
+                    file: {
+                        dimensions: {},
+                        type: 'assetFile',
+                        url: (this.assets.publicPath ?? '') + filePath,
+                        fileName: filePath
+                    },
+                    title: {
+                        type: 'string',
+                        value: path.basename(filePath)
+                    }
+                }
+            });
+        }
+        return assets;
     }
 
     async hasAccess(options: { userContext?: unknown }): Promise<{ hasConnection: boolean; hasPermissions: boolean }> {
@@ -170,30 +202,34 @@ export class FileSystemContentSource implements ContentSourceInterface {
         };
     }
 
-    publishDocuments(options: { documents: Document<unknown>[]; assets: Asset<unknown>[]; userContext?: unknown }): Promise<void> {
+    async publishDocuments(options: { documents: Document<unknown>[]; assets: Asset<unknown>[]; userContext?: unknown }): Promise<void> {
         throw new Error('Method not implemented.');
     }
 }
 
-function convertDocument(filePath: string, data: any, modelMap: ModelMap): Document | null {
+async function convertDocument(filePath: string, fullFilePath: string, data: any, modelMap: ModelMap): Promise<Document | null> {
     const { id, type, ...fields } = data;
     const model = modelMap[type];
     if (!model) {
         return null;
     }
-    const date = new Date().toISOString(); //TODO
+    let fileStats: fse.Stats | null = null;
+    try {
+        fileStats = await fse.stat(fullFilePath);
+    } catch (err) {}
     return {
         type: 'document',
         id: filePath,
         modelName: model.name,
         manageUrl: '',
         status: 'published',
-        createdAt: date,
-        updatedAt: date,
+        createdAt: (fileStats?.birthtime ?? new Date()).toISOString(),
+        updatedAt: (fileStats?.mtime ?? new Date()).toISOString(),
         context: {},
         fields: convertFields(fields, model.fields ?? [], modelMap)
     };
 }
+
 function convertFields(dataFields: Record<string, any>, modelFields: Field[], modelMap: ModelMap): Record<string, DocumentField> {
     const result: Record<string, DocumentField> = {};
     for (const [fieldName, fieldValue] of Object.entries(dataFields)) {
