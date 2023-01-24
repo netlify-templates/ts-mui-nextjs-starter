@@ -10,6 +10,8 @@ import {
     DocumentField,
     DocumentListFieldItems,
     Field,
+    FieldListItems,
+    FieldObjectProps,
     FieldSpecificProps,
     InitOptions,
     Locale,
@@ -30,6 +32,7 @@ export class FileSystemContentSource implements ContentSourceInterface {
     private models: Model[];
     private assets: Assets;
     private logger?: Logger;
+    private getModelMap: () => ModelMap;
 
     constructor(options: { rootDir: string; contentDir: string; models: Model[]; assets: Assets }) {
         this.rootDir = options.rootDir;
@@ -65,7 +68,59 @@ export class FileSystemContentSource implements ContentSourceInterface {
     }: {
         updatedFiles: string[];
     }): Promise<{ schemaChanged?: boolean | undefined; contentChangeEvent?: ContentChangeEvent<unknown, unknown> | undefined }> {
-        return {};
+        const modelMap = this.getModelMap?.();
+        if (!modelMap) {
+            return {};
+        }
+
+        const documents: Document[] = [];
+        const deletedDocumentIds: string[] = [];
+        const contentFiles = updatedFiles.filter(updatedFile => updatedFile.startsWith(this.contentDir));
+
+        for (const contentFile of contentFiles) {
+            const filePath = path.join(this.rootDir, contentFile);
+            if (!(await fse.pathExists(filePath))) {
+                deletedDocumentIds.push(contentFile);
+                continue;
+            }
+            let data;
+            try {
+                data = await getFileData(filePath);
+            } catch (err) {
+                this.logger?.warn('Error loading file ' + filePath, err);
+                continue;
+            }
+            const document = await convertDocument(contentFile, filePath, data, modelMap);
+            if (!document) {
+                this.logger?.warn('Error converting file ' + filePath);
+                continue;
+            }
+            documents.push(document);
+        }
+
+        const assets: Asset[] = [];
+        const deletedAssetIds: string[] = [];
+        const assetsDir = this.assets.referenceType === 'static' ? this.assets.staticDir : this.assets.assetsDir ?? this.assets.staticDir;
+        const assetFiles = updatedFiles.filter(updatedFile => updatedFile.startsWith(assetsDir));
+        for (const assetFile of assetFiles) {
+            const filePath = path.join(this.rootDir, assetFile);
+            if (!(await fse.pathExists(filePath))) {
+                deletedAssetIds.push(assetFile);
+                continue;
+            }
+            const asset = await convertAsset(assetFile, filePath, this.assets.publicPath);
+            assets.push(asset);
+        }
+
+        return {
+            schemaChanged: false, //TODO
+            contentChangeEvent: {
+                documents,
+                assets,
+                deletedDocumentIds,
+                deletedAssetIds
+            }
+        }
     }
 
     startWatchingContentUpdates(options: {
@@ -74,9 +129,12 @@ export class FileSystemContentSource implements ContentSourceInterface {
         getAsset: ({ assetId }: { assetId: string }) => Asset<unknown> | undefined;
         onContentChange: (contentChangeEvent: ContentChangeEvent<unknown, unknown>) => Promise<void>;
         onSchemaChange: () => void;
-    }): void {}
+    }): void {
+        this.getModelMap = options.getModelMap;
+    }
 
-    stopWatchingContentUpdates(): void {}
+    stopWatchingContentUpdates(): void {
+    }
 
     async getModels(): Promise<Model[]> {
         return this.models;
@@ -91,13 +149,9 @@ export class FileSystemContentSource implements ContentSourceInterface {
         const documents: Document[] = [];
         for (const filePath of filePaths) {
             const fullFilePath = path.join(this.rootDir, this.contentDir, filePath);
-            const extension = path.extname(filePath).substring(1);
             let data;
             try {
-                data = await utils.parseFile(fullFilePath);
-                if (MARKDOWN_FILE_EXTENSIONS.includes(extension) && _.has(data, 'frontmatter') && _.has(data, 'markdown')) {
-                    data = data.frontmatter;
-                }
+                data = await getFileData(fullFilePath);
             } catch (err) {
                 this.logger?.warn('Error loading file ' + filePath, err);
                 continue;
@@ -120,16 +174,12 @@ export class FileSystemContentSource implements ContentSourceInterface {
         const filePaths = await utils.readDirRec(assetsDir);
         const assets: Asset[] = [];
         for (const filePath of filePaths) {
-            let fileStats: fse.Stats | null = null;
-            try {
-                fileStats = await fse.stat(path.join(this.rootDir, filePath));
-            } catch (err) {}
+            const fullFilePath = path.join(this.rootDir, filePath);
             assets.push({
                 type: 'asset',
                 id: filePath,
                 context: {},
-                createdAt: (fileStats?.birthtime ?? new Date()).toISOString(),
-                updatedAt: (fileStats?.mtime ?? new Date()).toISOString(),
+                ...(await getFileDates(fullFilePath)),
                 manageUrl: '',
                 status: 'published',
                 fields: {
@@ -163,20 +213,56 @@ export class FileSystemContentSource implements ContentSourceInterface {
         locale?: string | undefined;
         defaultLocaleDocumentId?: string | undefined;
         userContext?: unknown;
-    }): Promise<Document<unknown>> {
+    }): Promise<Document> {
         throw new Error('Method not implemented.');
     }
 
-    updateDocument(options: {
-        document: Document<unknown>;
-        operations: UpdateOperation[];
-        modelMap: ModelMap;
-        userContext?: unknown;
-    }): Promise<Document<unknown>> {
-        throw new Error('Method not implemented.');
+    async updateDocument(options: { document: Document; operations: UpdateOperation[]; modelMap: ModelMap; userContext?: unknown }): Promise<Document> {
+        const { document } = options;
+        const filePath = path.join(this.rootDir, document.id);
+        const data = await getFileData(filePath);
+        for (const updateOperation of options.operations) {
+            switch (updateOperation.opType) {
+                case 'set': {
+                    const { field, fieldPath, modelField } = updateOperation;
+                    const value = mapUpdateOperationToValue(field, options.modelMap, modelField);
+                    _.set(data, fieldPath, value);
+                    break;
+                }
+                case 'unset': {
+                    const { fieldPath } = updateOperation;
+                    _.unset(data, fieldPath);
+                    break;
+                }
+                case 'insert': {
+                    const { item, fieldPath, modelField, index } = updateOperation;
+                    const value = mapUpdateOperationToValue(item, options.modelMap, modelField);
+                    const arr = [..._.get(data, fieldPath)];
+                    arr.splice(index ?? 0, 0, value);
+                    _.set(data, fieldPath, arr);
+                    break;
+                }
+                case 'remove': {
+                    const { fieldPath, index } = updateOperation;
+                    const arr = [..._.get(data, fieldPath)];
+                    arr.splice(index, 1);
+                    _.set(data, fieldPath, arr);
+                    break;
+                }
+                case 'reorder': {
+                    const { fieldPath, order } = updateOperation;
+                    const arr = [..._.get(data, fieldPath)];
+                    const newArr = order.map((newIndex) => arr[newIndex]);
+                    _.set(data, fieldPath, newArr);
+                    break;
+                }
+            }
+        }
+        await saveFileData(filePath, data);
+        return (await convertDocument(document.id, filePath, data, options.modelMap)) || document;
     }
 
-    deleteDocument(options: { document: Document<unknown>; userContext?: unknown }): Promise<void> {
+    deleteDocument(options: { document: Document; userContext?: unknown }): Promise<void> {
         throw new Error('Method not implemented.');
     }
 
@@ -207,25 +293,43 @@ export class FileSystemContentSource implements ContentSourceInterface {
     }
 }
 
+async function convertAsset(filePath: string, fullFilePath: string, publicPath?: string): Promise<Asset> {
+    return {
+        type: 'asset',
+        id: filePath,
+        context: {},
+        ...(await getFileDates(fullFilePath)),
+        manageUrl: '',
+        status: 'published',
+        fields: {
+            file: {
+                dimensions: {},
+                type: 'assetFile',
+                url: (publicPath ?? '') + filePath,
+                fileName: filePath
+            },
+            title: {
+                type: 'string',
+                value: path.basename(filePath)
+            }
+        }
+    }
+}
+
 async function convertDocument(filePath: string, fullFilePath: string, data: any, modelMap: ModelMap): Promise<Document | null> {
     const { id, type, ...fields } = data;
     const model = modelMap[type];
     if (!model) {
         return null;
     }
-    let fileStats: fse.Stats | null = null;
-    try {
-        fileStats = await fse.stat(fullFilePath);
-    } catch (err) {}
     return {
         type: 'document',
         id: filePath,
         modelName: model.name,
         manageUrl: '',
         status: 'published',
-        createdAt: (fileStats?.birthtime ?? new Date()).toISOString(),
-        updatedAt: (fileStats?.mtime ?? new Date()).toISOString(),
         context: {},
+        ...(await getFileDates(fullFilePath)),
         fields: convertFields(fields, model.fields ?? [], modelMap)
     };
 }
@@ -316,7 +420,79 @@ function convertFieldType(fieldValue: any, modelField: Field | FieldSpecificProp
                     }
                 }
             };
+        // TODO file, richText ???
         default:
             throw new Error('Unsupported type: ' + modelField.type);
     }
+}
+
+function mapUpdateOperationToValue(updateOperationField: UpdateOperationField, modelMap: ModelMap, modelField?: FieldSpecificProps): any {
+    switch (updateOperationField.type) {
+        case 'object':
+            const object = {};
+            _.forEach(updateOperationField.fields, (childUpdateOperationField, fieldName) => {
+                const childModelField = _.find((modelField as FieldObjectProps).fields, (field) => field.name === fieldName);
+                const value = mapUpdateOperationToValue(childUpdateOperationField, modelMap, childModelField);
+                _.set(result, fieldName, value);
+            });
+            return object;
+        case 'model':
+            const modelName = updateOperationField.modelName;
+            const childModel = modelMap[modelName];
+            const result = {};
+            _.forEach(updateOperationField.fields, (updateOperationField, fieldName) => {
+                const childModelField = _.find(childModel?.fields, (field) => field.name === fieldName);
+                const value = mapUpdateOperationToValue(updateOperationField, modelMap, childModelField);
+                _.set(result, fieldName, value);
+            });
+            return result;
+        case 'list':
+            const listItemsModel = modelField?.type === 'list' && modelField.items;
+            return updateOperationField.items.map((item) => {
+                let listItemModelField: FieldListItems | undefined;
+                if (_.isArray(listItemsModel)) {
+                    listItemModelField = (listItemsModel as FieldListItems[]).find((listItemsModel) => listItemsModel.type === item.type);
+                } else if (listItemsModel) {
+                    listItemModelField = listItemsModel;
+                }
+                return mapUpdateOperationToValue(item, modelMap, listItemModelField);
+            });
+        case 'reference':
+            return updateOperationField.refId;
+        default:
+            return updateOperationField.value;
+    }
+}
+
+async function getFileDates(filePath: string): Promise<{ createdAt: string; updatedAt: string }> {
+    let fileStats: fse.Stats | null = null;
+    try {
+        fileStats = await fse.stat(filePath);
+    } catch (err) {}
+    return {
+        createdAt: (fileStats?.birthtime ?? new Date()).toISOString(),
+        updatedAt: (fileStats?.mtime ?? new Date()).toISOString()
+    };
+}
+
+async function getFileData(filePath: string) {
+    const extension = path.extname(filePath).substring(1);
+    let data = await utils.parseFile(filePath);
+    if (MARKDOWN_FILE_EXTENSIONS.includes(extension) && _.has(data, 'frontmatter') && _.has(data, 'markdown')) {
+        data = data.frontmatter;
+    }
+    return data;
+}
+
+async function saveFileData(filePath: string, data: any) {
+    let dataToWrite = data;
+    const extension = path.extname(filePath).substring(1);
+    if (MARKDOWN_FILE_EXTENSIONS.includes(extension)) {
+        const existingData = await utils.parseFile(filePath);
+        dataToWrite = {
+            ...existingData,
+            frontmatter: data
+        };
+    }
+    return utils.outputDataIfNeeded(filePath, dataToWrite);
 }
