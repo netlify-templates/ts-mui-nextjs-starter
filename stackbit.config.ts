@@ -10,14 +10,12 @@ import { Link } from './.stackbit/models/Link';
 import { Page } from './.stackbit/models/Page';
 import { ThemeStyle } from './.stackbit/models/ThemeStyle';
 import { defineStackbitConfig } from '@stackbit/types';
-import { FileSystemContentSource } from './src/content-source/fs-content-source';
+import { FileSystemContentSource } from './content-source/fs-content-source';
 
 const sbConfig = defineStackbitConfig({
     stackbitVersion: '~0.6.0',
     ssgName: 'nextjs',
     nodeVersion: '16',
-    dataDir: 'content/data', //TODO
-    pagesDir: 'content/pages',
     contentSources: [
         new FileSystemContentSource({
             rootDir: __dirname,
@@ -31,22 +29,6 @@ const sbConfig = defineStackbitConfig({
             }
         })
     ]
-    // pageLayoutKey: 'type',
-    // styleObjectModelName: 'ThemeStyle',
-
-    // models: {
-    //     Button,
-    //     Card,
-    //     CardsSection,
-    //     Config,
-    //     Footer,
-    //     Header,
-    //     HeroSection,
-    //     Image,
-    //     Link,
-    //     Page,
-    //     ThemeStyle
-    // }
 });
 
 export default sbConfig;
