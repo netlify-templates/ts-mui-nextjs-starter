@@ -1,6 +1,7 @@
 ---
 title: Home
 type: Page
+slug: /
 sections:
   - type: HeroSection
     title: Stackbit starter

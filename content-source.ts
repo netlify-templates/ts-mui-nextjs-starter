@@ -112,7 +112,7 @@ export class FileSystemContentSource implements ContentSourceInterface {
                 deletedAssetIds.push(assetFile);
                 continue;
             }
-            const asset = await convertAsset(assetFile, filePath, this.assets.publicPath);
+            const asset = await convertAsset(path.relative(assetsDir, assetFile), filePath, this.assets.publicPath);
             assets.push(asset);
         }
 
@@ -160,7 +160,7 @@ export class FileSystemContentSource implements ContentSourceInterface {
                 this.logger?.warn('Error loading file ' + filePath, err);
                 continue;
             }
-            const document = await convertDocument(path.relative(contentDirPath, fullFilePath), fullFilePath, data, options.modelMap);
+            const document = await convertDocument(path.join(this.contentDir, filePath), fullFilePath, data, options.modelMap);
             if (!document) {
                 this.logger?.warn('Error converting file ' + filePath);
                 continue;
@@ -254,7 +254,7 @@ export class FileSystemContentSource implements ContentSourceInterface {
 
     async updateDocument(options: { document: Document; operations: UpdateOperation[]; modelMap: ModelMap; userContext?: unknown }): Promise<Document> {
         const { document } = options;
-        const filePath = path.join(this.rootDir, this.contentDir, document.id);
+        const filePath = path.join(this.rootDir, document.id);
         const data = await getFileData(filePath);
         for (const updateOperation of options.operations) {
             applyUpdateOp(updateOperation, data, options.modelMap);
@@ -265,7 +265,7 @@ export class FileSystemContentSource implements ContentSourceInterface {
 
     async deleteDocument(options: { document: Document; userContext?: unknown }): Promise<void> {
         const { document } = options;
-        const filePath = path.join(this.rootDir, this.contentDir, document.id);
+        const filePath = path.join(this.rootDir, document.id);
         await fse.unlink(filePath);
     }
 
@@ -282,7 +282,8 @@ export class FileSystemContentSource implements ContentSourceInterface {
             this.rootDir,
             this.assets.referenceType === 'static' ? this.assets.staticDir : this.assets.assetsDir ?? this.assets.staticDir
         );
-        const uploadFileName = path.join(assetsDir, this.assets.uploadDir ?? '', fileName);
+        const assetName = path.join(this.assets.uploadDir ?? '', fileName);
+        const uploadFileName = path.join(assetsDir, assetName);
 
         let readStream: Readable | null = null;
         if (base64) {
@@ -306,7 +307,7 @@ export class FileSystemContentSource implements ContentSourceInterface {
             throw new Error('No upload data found for asset');
         }
 
-        return await convertAsset(fileName, uploadFileName, this.assets.publicPath);
+        return await convertAsset(assetName, uploadFileName, this.assets.publicPath);
     }
 
     async validateDocuments(options: {

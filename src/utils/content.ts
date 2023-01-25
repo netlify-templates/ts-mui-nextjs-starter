@@ -33,7 +33,7 @@ function readContent(file: string): types.Document {
         default:
             throw Error(`Unhandled file type: ${file}`);
     }
-    content.__id = path.relative('content', file);
+    content.__id = file;
     content.__url = fileToUrl(file);
     return content;
 }
