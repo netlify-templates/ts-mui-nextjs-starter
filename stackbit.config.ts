@@ -1,3 +1,4 @@
+import { Author } from './.stackbit/models/Author';
 import { Button } from './.stackbit/models/Button';
 import { Card } from './.stackbit/models/Card';
 import { CardsSection } from './.stackbit/models/CardsSection';
@@ -20,7 +21,7 @@ const sbConfig = defineStackbitConfig({
         new FileSystemContentSource({
             rootDir: __dirname,
             contentDir: 'content',
-            models: [Button, Card, CardsSection, Config, Footer, Header, HeroSection, Image, Link, Page, ThemeStyle],
+            models: [Author, Button, Card, CardsSection, Config, Footer, Header, HeroSection, Image, Link, Page, ThemeStyle],
             assets: {
                 referenceType: 'static',
                 staticDir: 'public',

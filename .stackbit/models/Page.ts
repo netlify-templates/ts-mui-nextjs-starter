@@ -12,6 +12,7 @@ export const Page: Model =  {
     fields: [
         { type: 'slug', name: 'slug', label: 'slug', required: true },
         { type: 'string', name: 'title', label: 'Title', default: 'This Is a New Page', required: true },
+        { type: 'reference', name: 'author', models: ['Author'] },
         {
             type: 'list',
             name: 'sections',
