@@ -130,6 +130,7 @@ export class FileSystemContentSource implements ContentSourceInterface {
         onContentChange: (contentChangeEvent: ContentChangeEvent<unknown, unknown>) => Promise<void>;
         onSchemaChange: () => void;
     }): void {
+        //TODO can we get this from onFilesChange?
         this.getModelMap = options.getModelMap;
     }
 
@@ -234,6 +235,7 @@ export class FileSystemContentSource implements ContentSourceInterface {
         if (_.isEmpty(slugValue) || !_.isString(slugValue)) {
             slugValue = artisanalName.generate();
         }
+        //TODO add complete slug handling
         const slugTemplate = ((model.type === 'page' || model.type === 'data') && model.filePath) || '{slug}.json';
         const filePath = slugTemplate.replace('{slug}', sanitizeSlug(slugValue));
         const fullFilePath = path.join(this.rootDir, this.contentDir, filePath);
