@@ -113,7 +113,7 @@ export class FileSystemContentSource implements ContentSourceInterface {
         }
 
         return {
-            schemaChanged: false, //TODO
+            schemaChanged: false, // handled by stackbit.config builder
             contentChangeEvent: {
                 documents,
                 assets,

@@ -16,7 +16,7 @@ export const Page: Model =  {
             type: 'list',
             name: 'sections',
             label: 'Sections',
-            items: { type: 'model', models:[], groups: ['sectionComponent'] },
+            items: { type: 'model', models:['CardsSection', 'HeroSection'], groups: ['sectionComponent'] },
             default: [
                 {
                     type: 'HeroSection',
