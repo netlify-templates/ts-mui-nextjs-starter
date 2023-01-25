@@ -10,7 +10,7 @@ import { Link } from './.stackbit/models/Link';
 import { Page } from './.stackbit/models/Page';
 import { ThemeStyle } from './.stackbit/models/ThemeStyle';
 import { defineStackbitConfig } from '@stackbit/types';
-import { FileSystemContentSource } from 'content-source';
+import { FileSystemContentSource } from './src/content-source/fs-content-source';
 
 const sbConfig = defineStackbitConfig({
     stackbitVersion: '~0.6.0',
