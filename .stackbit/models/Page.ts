@@ -6,15 +6,17 @@ export const Page: Model =  {
     label: 'Page',
     folder: 'pages',
     urlPath: '/{slug}',
+    filePath: 'pages/{slug}.md',
     hideContent: true,
     thumbnail: 'https://assets.stackbit.com/components/models/thumbnails/default.png',
     fields: [
+        { type: 'slug', name: 'slug', label: 'slug', required: true },
         { type: 'string', name: 'title', label: 'Title', default: 'This Is a New Page', required: true },
         {
             type: 'list',
             name: 'sections',
             label: 'Sections',
-            items: { type: 'model', groups: ['sectionComponent'] },
+            items: { type: 'model', models:[], groups: ['sectionComponent'] },
             default: [
                 {
                     type: 'HeroSection',

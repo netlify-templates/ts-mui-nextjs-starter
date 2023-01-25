@@ -33,16 +33,15 @@ function readContent(file: string): types.Document {
         default:
             throw Error(`Unhandled file type: ${file}`);
     }
-
-    content.__id = file;
+    content.__id = path.relative('content', file);
     content.__url = fileToUrl(file);
     return content;
 }
 
 function fileToUrl(file: string) {
-    if (!file.startsWith(sbConfig.pagesDir)) return null;
+    if (!file.startsWith(sbConfig.pagesDir!)) return null;
 
-    let url = file.slice(sbConfig.pagesDir.length);
+    let url = file.slice(sbConfig.pagesDir!.length);
     url = url.split('.')[0];
     if (url.endsWith('/index')) {
         url = url.slice(0, -6) || '/';
@@ -51,7 +50,7 @@ function fileToUrl(file: string) {
 }
 
 function urlToFilePairs() {
-    const pageFiles = contentFilesInPath(sbConfig.pagesDir);
+    const pageFiles = contentFilesInPath(sbConfig.pagesDir!);
     return pageFiles.map((file) => [fileToUrl(file), file]);
 }
 

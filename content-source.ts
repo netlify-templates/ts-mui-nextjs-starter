@@ -22,7 +22,11 @@ import {
     UpdateOperationField,
     ValidationError
 } from '@stackbit/types';
-const { utils } = require('@stackbit/cms-core');
+import { utils } from '@stackbit/cms-core';
+import artisanalName from '@stackbit/artisanal-names';
+import slugify from 'slugify';
+import axios from 'axios';
+import { Readable } from 'stream';
 
 const MARKDOWN_FILE_EXTENSIONS = ['md', 'mdx', 'markdown'];
 
@@ -32,7 +36,7 @@ export class FileSystemContentSource implements ContentSourceInterface {
     private models: Model[];
     private assets: Assets;
     private logger?: Logger;
-    private getModelMap: () => ModelMap;
+    private getModelMap?: () => ModelMap;
 
     constructor(options: { rootDir: string; contentDir: string; models: Model[]; assets: Assets }) {
         this.rootDir = options.rootDir;
@@ -75,7 +79,7 @@ export class FileSystemContentSource implements ContentSourceInterface {
 
         const documents: Document[] = [];
         const deletedDocumentIds: string[] = [];
-        const contentFiles = updatedFiles.filter(updatedFile => updatedFile.startsWith(this.contentDir));
+        const contentFiles = updatedFiles.filter((updatedFile) => updatedFile.startsWith(this.contentDir));
 
         for (const contentFile of contentFiles) {
             const filePath = path.join(this.rootDir, contentFile);
@@ -101,7 +105,7 @@ export class FileSystemContentSource implements ContentSourceInterface {
         const assets: Asset[] = [];
         const deletedAssetIds: string[] = [];
         const assetsDir = this.assets.referenceType === 'static' ? this.assets.staticDir : this.assets.assetsDir ?? this.assets.staticDir;
-        const assetFiles = updatedFiles.filter(updatedFile => updatedFile.startsWith(assetsDir));
+        const assetFiles = updatedFiles.filter((updatedFile) => updatedFile.startsWith(assetsDir));
         for (const assetFile of assetFiles) {
             const filePath = path.join(this.rootDir, assetFile);
             if (!(await fse.pathExists(filePath))) {
@@ -120,7 +124,7 @@ export class FileSystemContentSource implements ContentSourceInterface {
                 deletedDocumentIds,
                 deletedAssetIds
             }
-        }
+        };
     }
 
     startWatchingContentUpdates(options: {
@@ -133,8 +137,7 @@ export class FileSystemContentSource implements ContentSourceInterface {
         this.getModelMap = options.getModelMap;
     }
 
-    stopWatchingContentUpdates(): void {
-    }
+    stopWatchingContentUpdates(): void {}
 
     async getModels(): Promise<Model[]> {
         return this.models;
@@ -145,10 +148,11 @@ export class FileSystemContentSource implements ContentSourceInterface {
     }
 
     async getDocuments(options: { modelMap: ModelMap }): Promise<Document[]> {
-        const filePaths = await utils.readDirRec(path.join(this.rootDir, this.contentDir));
+        const contentDirPath = path.join(this.rootDir, this.contentDir);
+        const filePaths = await utils.readDirRec(contentDirPath, {});
         const documents: Document[] = [];
         for (const filePath of filePaths) {
-            const fullFilePath = path.join(this.rootDir, this.contentDir, filePath);
+            const fullFilePath = path.join(contentDirPath, filePath);
             let data;
             try {
                 data = await getFileData(fullFilePath);
@@ -156,7 +160,7 @@ export class FileSystemContentSource implements ContentSourceInterface {
                 this.logger?.warn('Error loading file ' + filePath, err);
                 continue;
             }
-            const document = await convertDocument(path.relative(this.rootDir, fullFilePath), fullFilePath, data, options.modelMap);
+            const document = await convertDocument(path.relative(contentDirPath, fullFilePath), fullFilePath, data, options.modelMap);
             if (!document) {
                 this.logger?.warn('Error converting file ' + filePath);
                 continue;
@@ -171,10 +175,10 @@ export class FileSystemContentSource implements ContentSourceInterface {
             this.rootDir,
             this.assets.referenceType === 'static' ? this.assets.staticDir : this.assets.assetsDir ?? this.assets.staticDir
         );
-        const filePaths = await utils.readDirRec(assetsDir);
+        const filePaths = await utils.readDirRec(assetsDir, {});
         const assets: Asset[] = [];
         for (const filePath of filePaths) {
-            const fullFilePath = path.join(this.rootDir, filePath);
+            const fullFilePath = path.join(assetsDir, filePath);
             assets.push({
                 type: 'asset',
                 id: filePath,
@@ -206,7 +210,7 @@ export class FileSystemContentSource implements ContentSourceInterface {
         };
     }
 
-    createDocument(options: {
+    async createDocument(options: {
         updateOperationFields: Record<string, UpdateOperationField>;
         model: Model;
         modelMap: ModelMap;
@@ -214,59 +218,58 @@ export class FileSystemContentSource implements ContentSourceInterface {
         defaultLocaleDocumentId?: string | undefined;
         userContext?: unknown;
     }): Promise<Document> {
-        throw new Error('Method not implemented.');
+        const { model, modelMap } = options;
+        let slugValue;
+        const data: any = {
+            type: model.name
+        };
+        for (const fieldName in options.updateOperationFields) {
+            const updateOperationField = options.updateOperationFields[fieldName];
+            const modelField = _.find(model.fields, (field: Field) => field.name === fieldName);
+            if (!modelField) {
+                continue;
+            }
+            const value = mapUpdateOperationToValue(updateOperationField, modelMap, modelField);
+            if (modelField?.type === 'slug') {
+                slugValue = value;
+            }
+            data[fieldName] = value;
+        }
+        if (_.isEmpty(slugValue) || !_.isString(slugValue)) {
+            slugValue = artisanalName.generate();
+        }
+        const slugTemplate = ((model.type === 'page' || model.type === 'data') && model.filePath) || '{slug}.json';
+        const filePath = slugTemplate.replace('{slug}', sanitizeSlug(slugValue));
+        const fullFilePath = path.join(this.rootDir, this.contentDir, filePath);
+        await fse.ensureDir(path.dirname(fullFilePath));
+        await saveFileData(fullFilePath, data);
+
+        const document = await convertDocument(path.join(this.contentDir, filePath), fullFilePath, data, modelMap);
+        console.log(data);
+        if (!document) {
+            throw new Error('Error converting document');
+        }
+        return document;
     }
 
     async updateDocument(options: { document: Document; operations: UpdateOperation[]; modelMap: ModelMap; userContext?: unknown }): Promise<Document> {
         const { document } = options;
-        const filePath = path.join(this.rootDir, document.id);
+        const filePath = path.join(this.rootDir, this.contentDir, document.id);
         const data = await getFileData(filePath);
         for (const updateOperation of options.operations) {
-            switch (updateOperation.opType) {
-                case 'set': {
-                    const { field, fieldPath, modelField } = updateOperation;
-                    const value = mapUpdateOperationToValue(field, options.modelMap, modelField);
-                    _.set(data, fieldPath, value);
-                    break;
-                }
-                case 'unset': {
-                    const { fieldPath } = updateOperation;
-                    _.unset(data, fieldPath);
-                    break;
-                }
-                case 'insert': {
-                    const { item, fieldPath, modelField, index } = updateOperation;
-                    const value = mapUpdateOperationToValue(item, options.modelMap, modelField);
-                    const arr = [..._.get(data, fieldPath)];
-                    arr.splice(index ?? 0, 0, value);
-                    _.set(data, fieldPath, arr);
-                    break;
-                }
-                case 'remove': {
-                    const { fieldPath, index } = updateOperation;
-                    const arr = [..._.get(data, fieldPath)];
-                    arr.splice(index, 1);
-                    _.set(data, fieldPath, arr);
-                    break;
-                }
-                case 'reorder': {
-                    const { fieldPath, order } = updateOperation;
-                    const arr = [..._.get(data, fieldPath)];
-                    const newArr = order.map((newIndex) => arr[newIndex]);
-                    _.set(data, fieldPath, newArr);
-                    break;
-                }
-            }
+            applyUpdateOp(updateOperation, data, options.modelMap);
         }
         await saveFileData(filePath, data);
         return (await convertDocument(document.id, filePath, data, options.modelMap)) || document;
     }
 
-    deleteDocument(options: { document: Document; userContext?: unknown }): Promise<void> {
-        throw new Error('Method not implemented.');
+    async deleteDocument(options: { document: Document; userContext?: unknown }): Promise<void> {
+        const { document } = options;
+        const filePath = path.join(this.rootDir, this.contentDir, document.id);
+        await fse.unlink(filePath);
     }
 
-    uploadAsset(options: {
+    async uploadAsset(options: {
         url?: string | undefined;
         base64?: string | undefined;
         fileName: string;
@@ -274,7 +277,36 @@ export class FileSystemContentSource implements ContentSourceInterface {
         locale?: string | undefined;
         userContext?: unknown;
     }): Promise<Asset<unknown>> {
-        throw new Error('Method not implemented.');
+        const { url, base64, fileName } = options;
+        const assetsDir = path.join(
+            this.rootDir,
+            this.assets.referenceType === 'static' ? this.assets.staticDir : this.assets.assetsDir ?? this.assets.staticDir
+        );
+        const uploadFileName = path.join(assetsDir, this.assets.uploadDir ?? '', fileName);
+
+        let readStream: Readable | null = null;
+        if (base64) {
+            const buffer = Buffer.from(base64, 'base64');
+            readStream = Readable.from(buffer);
+        } else if (url) {
+            const response = await axios({
+                responseType: 'stream',
+                url
+            });
+            readStream = response.data;
+        }
+        if (readStream) {
+            await fse.ensureDir(path.dirname(uploadFileName));
+            const writeStream = fse.createWriteStream(uploadFileName);
+            readStream.pipe(writeStream);
+            await new Promise((resolve, reject) => {
+                writeStream.on('error', reject).on('finish', resolve);
+            });
+        } else {
+            throw new Error('No upload data found for asset');
+        }
+
+        return await convertAsset(fileName, uploadFileName, this.assets.publicPath);
     }
 
     async validateDocuments(options: {
@@ -289,7 +321,8 @@ export class FileSystemContentSource implements ContentSourceInterface {
     }
 
     async publishDocuments(options: { documents: Document<unknown>[]; assets: Asset<unknown>[]; userContext?: unknown }): Promise<void> {
-        throw new Error('Method not implemented.');
+        //TODO
+        // throw new Error('Method not implemented.');
     }
 }
 
@@ -313,7 +346,7 @@ async function convertAsset(filePath: string, fullFilePath: string, publicPath?:
                 value: path.basename(filePath)
             }
         }
-    }
+    };
 }
 
 async function convertDocument(filePath: string, fullFilePath: string, data: any, modelMap: ModelMap): Promise<Document | null> {
@@ -322,6 +355,7 @@ async function convertDocument(filePath: string, fullFilePath: string, data: any
     if (!model) {
         return null;
     }
+    const documentFields = convertFields(fields, model.fields ?? [], modelMap);
     return {
         type: 'document',
         id: filePath,
@@ -330,7 +364,7 @@ async function convertDocument(filePath: string, fullFilePath: string, data: any
         status: 'published',
         context: {},
         ...(await getFileDates(fullFilePath)),
-        fields: convertFields(fields, model.fields ?? [], modelMap)
+        fields: documentFields
     };
 }
 
@@ -439,7 +473,9 @@ function mapUpdateOperationToValue(updateOperationField: UpdateOperationField, m
         case 'model':
             const modelName = updateOperationField.modelName;
             const childModel = modelMap[modelName];
-            const result = {};
+            const result = {
+                type: modelName
+            };
             _.forEach(updateOperationField.fields, (updateOperationField, fieldName) => {
                 const childModelField = _.find(childModel?.fields, (field) => field.name === fieldName);
                 const value = mapUpdateOperationToValue(updateOperationField, modelMap, childModelField);
@@ -488,11 +524,57 @@ async function saveFileData(filePath: string, data: any) {
     let dataToWrite = data;
     const extension = path.extname(filePath).substring(1);
     if (MARKDOWN_FILE_EXTENSIONS.includes(extension)) {
-        const existingData = await utils.parseFile(filePath);
+        const existingData = (await fse.pathExists(filePath)) ? await utils.parseFile(filePath) : {};
         dataToWrite = {
             ...existingData,
             frontmatter: data
         };
     }
     return utils.outputDataIfNeeded(filePath, dataToWrite);
+}
+
+function applyUpdateOp(updateOperation: UpdateOperation, data: any, modelMap: ModelMap) {
+    switch (updateOperation.opType) {
+        case 'set': {
+            const { field, fieldPath, modelField } = updateOperation;
+            const value = mapUpdateOperationToValue(field, modelMap, modelField);
+            _.set(data, fieldPath, value);
+            break;
+        }
+        case 'unset': {
+            const { fieldPath } = updateOperation;
+            _.unset(data, fieldPath);
+            break;
+        }
+        case 'insert': {
+            const { item, fieldPath, modelField, index } = updateOperation;
+            const value = mapUpdateOperationToValue(item, modelMap, modelField);
+            const arr = [..._.get(data, fieldPath)];
+            arr.splice(index ?? 0, 0, value);
+            _.set(data, fieldPath, arr);
+            break;
+        }
+        case 'remove': {
+            const { fieldPath, index } = updateOperation;
+            const arr = [..._.get(data, fieldPath)];
+            arr.splice(index, 1);
+            _.set(data, fieldPath, arr);
+            break;
+        }
+        case 'reorder': {
+            const { fieldPath, order } = updateOperation;
+            const arr = [..._.get(data, fieldPath)];
+            const newArr = order.map((newIndex) => arr[newIndex]);
+            _.set(data, fieldPath, newArr);
+            break;
+        }
+    }
+    return data;
+}
+
+function sanitizeSlug(slug: string) {
+    return slug
+        .split('/')
+        .map((part) => slugify(part, { lower: true }))
+        .join('/');
 }
