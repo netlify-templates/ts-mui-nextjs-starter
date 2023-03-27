@@ -42,3 +42,4 @@ export const sbConfig = defineStackbitConfig({
     ]
 });
 
+export default sbConfig;
