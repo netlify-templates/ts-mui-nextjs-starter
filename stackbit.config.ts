@@ -13,23 +13,32 @@ import { Link } from './.stackbit/models/Link';
 import { Page } from './.stackbit/models/Page';
 import { ThemeStyle } from './.stackbit/models/ThemeStyle';
 
+const gitContentSource = new GitContentSource({
+    rootPath: __dirname,
+    contentDirs: ['content'],
+    models: [Button, Card, CardsSection, Config, Footer, Header, HeroSection, Image, Link, Page, ThemeStyle],
+    assetsConfig: {
+        referenceType: 'static',
+        staticDir: 'public',
+        uploadDir: 'images',
+        publicPath: '/'
+    }
+});
+
 export const sbConfig = defineStackbitConfig({
     stackbitVersion: '~0.6.0',
     ssgName: 'nextjs',
     nodeVersion: '16',
-    contentSources: [
-        new GitContentSource({
-            rootPath: __dirname,
-            contentDirs: ['content'],
-            models: [Button, Card, CardsSection, Config, Footer, Header, HeroSection, Image, Link, Page, ThemeStyle],
-            assetsConfig: {
-                referenceType: 'static',
-                staticDir: 'public',
-                uploadDir: 'images',
-                publicPath: '/'
-            }
-        })
+    contentSources: [gitContentSource],
+    sidebarButtons: [
+        {
+            type: 'model',
+            label: 'Global styles',
+            icon: 'style',
+            modelName: 'ThemeStyle',
+            srcType: gitContentSource.getContentSourceType(),
+            srcProjectId: gitContentSource.getProjectId()
+        }
     ]
 });
 
-export default sbConfig;
