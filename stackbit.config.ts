@@ -1,3 +1,6 @@
+import { defineStackbitConfig } from '@stackbit/types';
+import { GitContentSource } from '@stackbit/cms-git';
+
 import { Button } from './.stackbit/models/Button';
 import { Card } from './.stackbit/models/Card';
 import { CardsSection } from './.stackbit/models/CardsSection';
@@ -10,34 +13,23 @@ import { Link } from './.stackbit/models/Link';
 import { Page } from './.stackbit/models/Page';
 import { ThemeStyle } from './.stackbit/models/ThemeStyle';
 
-const sbConfig = {
-    stackbitVersion: '~0.5.0',
+export const sbConfig = defineStackbitConfig({
+    stackbitVersion: '~0.6.0',
     ssgName: 'nextjs',
-    cmsName: 'git',
     nodeVersion: '16',
-    dataDir: 'content/data',
-    pagesDir: 'content/pages',
-    pageLayoutKey: 'type',
-    styleObjectModelName: 'ThemeStyle',
-    assets: {
-        referenceType: 'static',
-        staticDir: 'public',
-        uploadDir: 'images',
-        publicPath: '/'
-    },
-    models: {
-        Button,
-        Card,
-        CardsSection,
-        Config,
-        Footer,
-        Header,
-        HeroSection,
-        Image,
-        Link,
-        Page,
-        ThemeStyle
-    }
-};
+    contentSources: [
+        new GitContentSource({
+            rootPath: __dirname,
+            contentDirs: ['content'],
+            models: [Button, Card, CardsSection, Config, Footer, Header, HeroSection, Image, Link, Page, ThemeStyle],
+            assetsConfig: {
+                referenceType: 'static',
+                staticDir: 'public',
+                uploadDir: 'images',
+                publicPath: '/'
+            }
+        })
+    ]
+});
 
 export default sbConfig;
