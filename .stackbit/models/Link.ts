@@ -1,8 +1,4 @@
-import { Model } from '@stackbit/types';
-
-export const Link: Model = {
-    type: 'object',
-    name: 'Link',
+export const Link =  {
     label: 'Link',
     labelField: 'label',
     fieldGroups: [{ name: 'styles', label: 'Styles' }],
@@ -37,3 +33,4 @@ export const Link: Model = {
         }
     ]
 };
+
