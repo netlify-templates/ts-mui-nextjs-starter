@@ -1,12 +1,7 @@
-import { Model } from '@stackbit/types';
-
-export const ThemeStyle: Model =  {
+export const ThemeStyle =  {
     type: 'data',
-    name: 'ThemeStyle',
     label: 'Theme Style',
-    singleInstance: true,
-    filePath: 'content/data/style.json',
-    readOnly: true,
+    file: 'style.json',
     fields: [
         {
             type: 'enum',
