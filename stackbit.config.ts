@@ -1,22 +1,11 @@
-import { defineStackbitConfig } from '@stackbit/types';
 import { GitContentSource } from '@stackbit/cms-git';
-
-import { Button } from './.stackbit/models/Button';
-import { Card } from './.stackbit/models/Card';
-import { CardsSection } from './.stackbit/models/CardsSection';
-import { Config } from './.stackbit/models/Config';
-import { Footer } from './.stackbit/models/Footer';
-import { Header } from './.stackbit/models/Header';
-import { HeroSection } from './.stackbit/models/HeroSection';
-import { Image } from './.stackbit/models/Image';
-import { Link } from './.stackbit/models/Link';
-import { Page } from './.stackbit/models/Page';
-import { ThemeStyle } from './.stackbit/models/ThemeStyle';
+import { defineStackbitConfig } from '@stackbit/types';
+import { allModels } from './.stackbit/models';
 
 const gitContentSource = new GitContentSource({
     rootPath: __dirname,
     contentDirs: ['content'],
-    models: [Button, Card, CardsSection, Config, Footer, Header, HeroSection, Image, Link, Page, ThemeStyle],
+    models: Object.values(allModels),
     assetsConfig: {
         referenceType: 'static',
         staticDir: 'public',
@@ -30,6 +19,10 @@ export const sbConfig = defineStackbitConfig({
     ssgName: 'nextjs',
     nodeVersion: '16',
     contentSources: [gitContentSource],
+    presetSource: {
+        type: 'files',
+        presetDirs: ['.stackbit/presets']
+    },
     sidebarButtons: [
         {
             type: 'model',
