@@ -1,11 +1,7 @@
-import { Model } from '@stackbit/types';
-
-export const Config: Model = {
+export const Config = {
     type: 'data',
-    name: 'Config',
     label: 'Site configuration',
     singleInstance: true,
-    filePath: 'content/data/config.json',
     readOnly: true,
     fields: [
         { type: 'image', name: 'favicon', label: 'Favicon', default: 'https://assets.stackbit.com/components/images/default/favicon.svg' },
@@ -13,3 +9,4 @@ export const Config: Model = {
         { type: 'model', name: 'footer', label: 'Footer configuration', models: ['Footer'] }
     ]
 };
+
