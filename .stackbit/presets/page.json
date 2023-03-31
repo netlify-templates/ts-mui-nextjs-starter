@@ -10,7 +10,8 @@
                     {
                         "type": "HeroSection",
                         "title": "An Empty Page",
-                        "text": "Add more sections by hovering above or below this one and clicking '+ Add Section', or using the sidebar."
+                        "text": "Add more sections by hovering above or below this one and clicking '+ Add Section', or using the sidebar.",
+                        "image": null
                     }
                 ]
             }
