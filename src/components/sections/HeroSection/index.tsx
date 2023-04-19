@@ -13,12 +13,13 @@ export type Props = types.HeroSection & types.StackbitFieldPath;
 export const HeroSection: React.FC<Props> = (props) => {
     const { title, subtitle, text, image, actions = [], 'data-sb-field-path': fieldPath } = props;
     const hasTextContent = !!title || !!subtitle || !!text || actions.length > 0;
+    const imageUrl = image?.url ? (typeof image.url === 'string' ? image.url : image.url.unsplashImageUrl) : null;
 
     return (
         <MuiBox sx={{ py: { xs: 6, sm: 10 } }} data-sb-field-path={fieldPath}>
             <MuiGrid container spacing={4}>
                 {hasTextContent && (
-                    <MuiGrid item xs={12} md={image?.url ? 6 : 12}>
+                    <MuiGrid item xs={12} md={imageUrl ? 6 : 12}>
                         {title && (
                             <MuiTypography component="h1" variant="h2" color="text.primary" data-sb-field-path=".title">
                                 {title}
@@ -58,7 +59,7 @@ export const HeroSection: React.FC<Props> = (props) => {
                         )}
                     </MuiGrid>
                 )}
-                {image?.url && (
+                {imageUrl && (
                     <MuiGrid item xs={12} md={hasTextContent ? 6 : 12}>
                         <MuiBox
                             component="img"
@@ -68,7 +69,7 @@ export const HeroSection: React.FC<Props> = (props) => {
                                 width: '100%'
                             }}
                             alt={image?.altText}
-                            src={image?.url}
+                            src={imageUrl}
                             data-sb-field-path=".image .image.url#@src .image.altText#@alt"
                         />
                     </MuiGrid>

@@ -70,7 +70,7 @@ export type HeroSection = {
 
 export type Image = {
     type: 'Image';
-    url?: string;
+    url?: { unsplashImageUrl: string } | string;
     altText?: string;
 };
 

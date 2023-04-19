@@ -8,6 +8,7 @@ export const Image: Model = {
     fields:
         [{
             type: 'image',
+            source: 'unsplash-asset-source',
             name: 'url',
             label: 'Image',
             description: 'The URL of the image',

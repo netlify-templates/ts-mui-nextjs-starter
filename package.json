@@ -30,8 +30,8 @@
     },
     "devDependencies": {
         "@stackbit/artisanal-names": "^1.0.1",
-        "@stackbit/cms-core": "0.1.20",
-        "@stackbit/types": "^0.1.9",
+        "@stackbit/cms-git": "0.2.6-staging.1",
+        "@stackbit/types": "0.5.2-staging.1",
         "@types/fs-extra": "^11.0.1",
         "@types/glob": "^8.0.1",
         "@types/js-yaml": "^4.0.5",
