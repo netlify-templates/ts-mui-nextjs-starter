@@ -1,7 +1,11 @@
-export const Page =  {
+import { Model } from '@stackbit/types';
+
+export const Page: Model = {
     type: 'page',
+    name: 'Page',
     label: 'Page',
     urlPath: '/{slug}',
+    filePath: 'content/pages/{slug}.md',
     hideContent: true,
     thumbnail: 'https://assets.stackbit.com/components/models/thumbnails/default.png',
     fields: [
@@ -10,7 +14,7 @@ export const Page =  {
             type: 'list',
             name: 'sections',
             label: 'Sections',
-            items: { type: 'model', groups: ['sectionComponent'] },
+            items: { type: 'model', models: [], groups: ['sectionComponent'] },
             default: [
                 {
                     type: 'HeroSection',
@@ -26,4 +30,3 @@ export const Page =  {
         }
     ]
 };
-

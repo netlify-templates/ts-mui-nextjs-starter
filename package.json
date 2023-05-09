@@ -13,12 +13,12 @@
         "prettier": "prettier --write src"
     },
     "dependencies": {
-        "@emotion/cache": "^11.10.5",
-        "@emotion/react": "^11.10.6",
-        "@emotion/server": "^11.10.0",
-        "@emotion/styled": "^11.10.6",
-        "@mui/icons-material": "^5.11.11",
-        "@mui/material": "^5.11.13",
+        "@emotion/cache": "^11.11.0",
+        "@emotion/react": "^11.11.0",
+        "@emotion/server": "^11.11.0",
+        "@emotion/styled": "^11.11.0",
+        "@mui/icons-material": "^5.11.16",
+        "@mui/material": "^5.12.3",
         "front-matter": "^4.0.2",
         "glob": "^9.3.1",
         "js-yaml": "^4.1.0",
@@ -28,6 +28,8 @@
         "react-dom": "^18.2.0"
     },
     "devDependencies": {
+        "@stackbit/cms-git": "^0.3.0",
+        "@stackbit/types": "^0.6.0",
         "@types/glob": "^8.1.0",
         "@types/js-yaml": "^4.0.5",
         "@types/node": "^18.15.5",
