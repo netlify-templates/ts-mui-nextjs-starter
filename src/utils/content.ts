@@ -2,12 +2,11 @@ import * as fs from 'fs';
 import path from 'path';
 import glob from 'glob';
 import frontmatter from 'front-matter';
-import sbConfig from './../../stackbit.config';
 import * as types from 'types';
 
-if (!sbConfig.pagesDir || !sbConfig.dataDir) throw new Error('Invalid Stackbit config file');
-
-export const siteConfigFile = sbConfig.dataDir + '/config.json';
+export const dataDir = 'content/data';
+export const pagesDir = 'content/pages';
+export const siteConfigFile = dataDir + '/config.json';
 
 const supportedFileTypes = ['md', 'json'];
 
@@ -40,9 +39,9 @@ function readContent(file: string): types.Document {
 }
 
 function fileToUrl(file: string) {
-    if (!file.startsWith(sbConfig.pagesDir)) return null;
+    if (!file.startsWith(pagesDir)) return null;
 
-    let url = file.slice(sbConfig.pagesDir.length);
+    let url = file.slice(pagesDir.length);
     url = url.split('.')[0];
     if (url.endsWith('/index')) {
         url = url.slice(0, -6) || '/';
@@ -51,7 +50,7 @@ function fileToUrl(file: string) {
 }
 
 function urlToFilePairs() {
-    const pageFiles = contentFilesInPath(sbConfig.pagesDir);
+    const pageFiles = contentFilesInPath(pagesDir);
     return pageFiles.map((file) => [fileToUrl(file), file]);
 }
 
