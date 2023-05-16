@@ -1,8 +1,4 @@
-import { Model } from '@stackbit/types';
-
-export const Card: Model = {
-    type: 'object',
-    name: 'Card',
+export const Card = {
     label: 'Card',
     labelField: 'title',
     fields: [
@@ -30,3 +26,5 @@ export const Card: Model = {
         }
     ]
 };
+
+
