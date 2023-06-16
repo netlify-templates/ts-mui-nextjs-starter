@@ -23,16 +23,7 @@ export const sbConfig = defineStackbitConfig({
         type: 'files',
         presetDirs: ['.stackbit/presets']
     },
-    sidebarButtons: [
-        {
-            type: 'model',
-            label: 'Global styles',
-            icon: 'style',
-            modelName: 'ThemeStyle',
-            srcType: gitContentSource.getContentSourceType(),
-            srcProjectId: gitContentSource.getProjectId()
-        }
-    ]
+    styleObjectModelName: 'ThemeStyle'
 });
 
 export default sbConfig;
