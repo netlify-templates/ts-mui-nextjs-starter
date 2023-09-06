@@ -28,8 +28,8 @@
         "react-dom": "^18.2.0"
     },
     "devDependencies": {
-        "@stackbit/cms-git": "^0.3.20",
-        "@stackbit/types": "^0.10.0",
+        "@stackbit/cms-git": "^0.3.21",
+        "@stackbit/types": "^0.10.1",
         "@types/glob": "^8.1.0",
         "@types/js-yaml": "^4.0.5",
         "@types/node": "^20.3.1",
