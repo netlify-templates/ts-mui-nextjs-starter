@@ -2,7 +2,7 @@
     "name": "mui-nextjs-starter",
     "version": "0.1.1",
     "engines": {
-        "node": ">=16"
+        "node": ">=18"
     },
     "sideEffects": false,
     "scripts": {
@@ -17,8 +17,8 @@
         "@emotion/react": "^11.11.1",
         "@emotion/server": "^11.11.0",
         "@emotion/styled": "^11.11.0",
-        "@mui/icons-material": "^5.14.7",
-        "@mui/material": "^5.14.7",
+        "@mui/icons-material": "^5.14.9",
+        "@mui/material": "^5.14.9",
         "front-matter": "^4.0.2",
         "glob": "^9.3.1",
         "js-yaml": "^4.1.0",
@@ -28,8 +28,8 @@
         "react-dom": "^18.2.0"
     },
     "devDependencies": {
-        "@stackbit/cms-git": "^0.3.21",
-        "@stackbit/types": "^0.10.1",
+        "@stackbit/cms-git": "^0.3.22",
+        "@stackbit/types": "^0.10.2",
         "@types/glob": "^8.1.0",
         "@types/js-yaml": "^4.0.5",
         "@types/node": "^20.3.1",
