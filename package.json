@@ -1,9 +1,6 @@
 {
     "name": "mui-nextjs-starter",
     "version": "0.1.1",
-    "engines": {
-        "node": ">=16"
-    },
     "sideEffects": false,
     "scripts": {
         "dev": "next dev",
@@ -28,13 +25,13 @@
         "react-dom": "^18.2.0"
     },
     "devDependencies": {
-        "@stackbit/cms-git": "^0.3.21",
-        "@stackbit/types": "^0.10.1",
+        "@stackbit/cms-git": "^0.3.23",
+        "@stackbit/types": "^0.10.3",
         "@types/glob": "^8.1.0",
         "@types/js-yaml": "^4.0.5",
         "@types/node": "^20.3.1",
         "@types/react": "^18.2.12",
-        "autoprefixer": "^10.4.15",
+        "autoprefixer": "^10.4.16",
         "eslint": "^8.42.0",
         "eslint-config-next": "^13.4.5",
         "eslint-config-prettier": "^8.8.0",
