@@ -20,13 +20,13 @@
         "glob": "^9.3.1",
         "js-yaml": "^4.1.0",
         "markdown-to-jsx": "^7.2.1",
-        "next": "^13.4.5",
+        "next": "13.4.19",
         "react": "^18.2.0",
         "react-dom": "^18.2.0"
     },
     "devDependencies": {
-        "@stackbit/cms-git": "^0.3.25",
-        "@stackbit/types": "^0.10.4",
+        "@stackbit/cms-git": "^0.3.27",
+        "@stackbit/types": "^0.10.7",
         "@types/glob": "^8.1.0",
         "@types/js-yaml": "^4.0.5",
         "@types/node": "^20.3.1",
