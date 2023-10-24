@@ -16,7 +16,7 @@
                     {
                         "type": "Button",
                         "label": "Start Building",
-                        "url": "https://docs.stackbit.com/getting-started/",
+                        "url": "https://docs.netlify.com/create/getting-started/",
                         "size": "large",
                         "variant": "contained",
                         "color": "primary"
@@ -24,7 +24,7 @@
                     {
                         "type": "Button",
                         "label": "Read the Docs",
-                        "url": "https://docs.stackbit.com/",
+                        "url": "https://docs.netlify.com/create/overview",
                         "size": "large",
                         "variant": "outlined",
                         "color": "primary"

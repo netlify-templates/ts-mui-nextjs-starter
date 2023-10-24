@@ -3,22 +3,22 @@ title: Home
 type: Page
 sections:
   - type: HeroSection
-    title: Stackbit starter
+    title: Netlify Create starter
     subtitle: 'Featuring TypeScript, Next.js, MUI v5 & Emotion'
     text: >
       This is the HeroSection component. You can visually edit this component &
       add more sections while developing locally. [Learn
-      more.](https://docs.stackbit.com/how-to-guides/local-development/)
+      more.](https://docs.netlify.com/create/features/local-development)
     actions:
       - type: Button
         label: Start Building
-        url: 'https://docs.stackbit.com/getting-started/'
+        url: 'https://docs.netlify.com/create/quickstart'
         size: large
         variant: contained
         color: primary
       - type: Button
         label: Read the Docs
-        url: 'https://docs.stackbit.com/'
+        url: 'https://docs.netlify.com/create/overview'
         size: large
         variant: outlined
         color: primary
@@ -44,7 +44,7 @@ sections:
         actions:
           - type: Button
             label: Read the Docs
-            url: 'https://docs.stackbit.com/'
+            url: 'https://docs.netlify.com/create/overview'
       - type: Card
         title: Second Card Title
         image:
@@ -59,7 +59,7 @@ sections:
         actions:
           - type: Button
             label: Read the Docs
-            url: 'https://docs.stackbit.com/'
+            url: 'https://docs.netlify.com/create/overview'
       - type: Card
         title: Third Card Title
         image:
@@ -74,5 +74,5 @@ sections:
         actions:
           - type: Button
             label: Read the Docs
-            url: 'https://docs.stackbit.com/'
+            url: 'https://docs.netlify.com/create/overview'
 ---
