@@ -19,13 +19,13 @@
             {
                 "type": "Link",
                 "label": "Documentation",
-                "url": "https://docs.stackbit.com/",
+                "url": "https://docs.netlify.com/create/overview",
                 "underline": "hover"
             }
         ]
     },
     "footer": {
-        "copyrightText": "Powered by Stackbit.",
+        "copyrightText": "Powered by Netlify Create.",
         "navLinks": [
             {
                 "type": "Link",
@@ -43,7 +43,7 @@
                 "type": "Link",
                 "label": "Documentation",
                 "underline": "hover",
-                "url": "https://docs.stackbit.com/"
+                "url": "https://docs.netlify.com/create/overview"
             }
         ]
     }
