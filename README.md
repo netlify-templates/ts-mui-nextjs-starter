@@ -1,12 +1,12 @@
-# Stackbit Next.js + TypeScript + MUI Starter
+# Netlify Create Next.js + TypeScript + MUI Starter
 
 <div style="text-align: center">
 
-![Next.js + TS + MUI Stackbit Starter](https://assets.stackbit.com/docs/ts-nextjs-starter-thumb.png)
+![Next.js + TS + MUI Netlify Create Starter](https://assets.stackbit.com/docs/ts-nextjs-starter-thumb.png)
 
 </div>
 
-This is a minimal starting point for new Stackbit projects. It is built with Next.js, TypeScript, and [MUI](https://mui.com/), and is equipped with visual editing capabilities using Stackbit. It uses markdown files as the content source. See below for [other Stackbit example projects](#other-stackbit-projects).
+This is a minimal starting point for new Netlify Create projects. It is built with Next.js, TypeScript, and [MUI](https://mui.com/), and is equipped with visual editing capabilities using Stackbit. It uses markdown files as the content source. See below for [other Netlify Create example projects](#other-stackbit-projects).
 
 **⚡ Demo:** [stackbit-ts-mui-nextjs-starter.netlify.app](https://stackbit-ts-mui-nextjs-starter.netlify.app/)
 
@@ -71,4 +71,4 @@ You can also visit [our `stackbit-themes` GitHub organization](https://github.co
 
 ## Join the Community
 
-[Join us on Discord](https://discord.gg/HUNhjVkznH) for community support and to showcase what you build with this starter.
+[Join us on Netlify answers](https://answers.netlify.com/) for community support and to showcase what you build with this starter.
