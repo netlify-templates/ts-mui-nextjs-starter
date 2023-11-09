@@ -17,7 +17,7 @@ const gitContentSource = new GitContentSource({
 export const sbConfig = defineStackbitConfig({
     stackbitVersion: '~0.6.0',
     ssgName: 'nextjs',
-    nodeVersion: '16',
+    nodeVersion: '18',
     contentSources: [gitContentSource],
     presetSource: {
         type: 'files',
