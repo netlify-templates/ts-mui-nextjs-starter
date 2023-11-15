@@ -3,7 +3,7 @@ title: Home
 type: Page
 sections:
   - type: HeroSection
-    title: Netlify Create starter
+    title: Netlify Create Starter
     subtitle: 'Featuring TypeScript, Next.js, MUI v5 & Emotion'
     text: >
       This is the HeroSection component. You can visually edit this component &
@@ -27,7 +27,7 @@ sections:
       url: /images/hero.svg
       altText: Hero section image
   - type: CardsSection
-    title: CardsSection Component
+    title: Cards Section Component
     subtitle: Section subtitle here
     items:
       - type: Card
