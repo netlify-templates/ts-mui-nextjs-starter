@@ -25,12 +25,12 @@
         "react-dom": "^18.2.0"
     },
     "devDependencies": {
-        "@stackbit/cms-git": "^0.3.40",
-        "@stackbit/types": "^0.10.20",
+        "@stackbit/cms-git": "^0.3.42",
+        "@stackbit/types": "^0.10.22",
         "@types/glob": "^8.1.0",
         "@types/js-yaml": "^4.0.9",
-        "@types/node": "^20.10.6",
-        "@types/react": "^18.2.46",
+        "@types/node": "^20.10.8",
+        "@types/react": "^18.2.47",
         "autoprefixer": "^10.4.16",
         "eslint": "^8.56.0",
         "eslint-config-next": "^14.0.4",
