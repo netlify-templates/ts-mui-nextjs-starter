@@ -14,8 +14,8 @@
         "@emotion/react": "^11.11.3",
         "@emotion/server": "^11.11.0",
         "@emotion/styled": "^11.11.0",
-        "@mui/icons-material": "^5.15.7",
-        "@mui/material": "^5.15.7",
+        "@mui/icons-material": "^5.15.10",
+        "@mui/material": "^5.15.10",
         "front-matter": "^4.0.2",
         "glob": "^9.3.5",
         "js-yaml": "^4.1.0",
@@ -25,8 +25,8 @@
         "react-dom": "^18.2.0"
     },
     "devDependencies": {
-        "@stackbit/cms-git": "^0.3.46",
-        "@stackbit/types": "^0.11.1",
+        "@stackbit/cms-git": "^0.4.0",
+        "@stackbit/types": "^0.11.2",
         "@types/glob": "^8.1.0",
         "@types/js-yaml": "^4.0.9",
         "@types/node": "^20.11.16",
