@@ -3,7 +3,7 @@ title: Home
 type: Page
 sections:
   - type: HeroSection
-    title: Netlify Create Starter
+    title: Hello !!!!
     subtitle: 'Featuring TypeScript, Next.js, MUI v5 & Emotion'
     text: >
       This is the HeroSection component. You can visually edit this component &
