@@ -11,7 +11,7 @@ This is a minimal starting point for new Netlify Create projects. It is built wi
 **⚡ Demo:** [stackbit-ts-mui-nextjs-starter.netlify.app](https://stackbit-ts-mui-nextjs-starter.netlify.app/)
 
 
-## Features
+## Features of this branch2
 
 This is meant to be a simple starting point that demonstrates the use of bringing your own component library, such as MUI.
 
