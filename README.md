@@ -8,7 +8,7 @@
 
 This is a minimal starting point for new Netlify Create projects. It is built with Next.js, TypeScript, and [MUI](https://mui.com/), and is equipped with visual editing capabilities using Stackbit. It uses markdown files as the content source. See below for [other Netlify Create example projects](#other-stackbit-projects).
 
-**⚡ Demo:** [stackbit-ts-mui-nextjs-starter.netlify.app](https://stackbit-ts-mui-nextjs-starter.netlify.app/)
+**⚡ Demo:** [ts-mui-starter.netlify.app](https://ts-mui-starter.netlify.app/)
 
 
 ## Features
