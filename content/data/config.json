@@ -25,7 +25,7 @@
         ]
     },
     "footer": {
-        "copyrightText": "Powered by Netlify Create.",
+        "copyrightText": "Powered by [Netlify Create](https://www.netlify.com/platform/create/).",
         "navLinks": [
             {
                 "type": "Link",
