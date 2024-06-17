@@ -1,8 +1,8 @@
-# Netlify Create Next.js + TypeScript + MUI Starter
+# Netlify Next.js + TypeScript + MUI Starter  
 
-![Next.js + TS + MUI Netlify Create Starter](https://assets.stackbit.com/docs/ts-nextjs-starter-thumb.png)
+![Netlify Next.js + TS + MUI Starter](https://assets.stackbit.com/docs/ts-nextjs-starter-thumb.png)
 
-This is a minimal starting point for new Netlify Create projects. It is built with Next.js, TypeScript, and [MUI](https://mui.com/), and is equipped with visual editing capabilities using Netlify Create. It uses markdown files as the the [Git Content Source](https://docs.netlify.com/create/content-sources/git/).
+This is a minimal starting point for new Netlify projects with visual editing. It is built with Next.js, TypeScript, and [MUI](https://mui.com/), and is equipped with [visual editing capabilities](https://docs.netlify.com/visual-editor/visual-editing/). It uses markdown files as the the [Git Content Source](https://docs.netlify.com/create/content-sources/git/).
 
 **⚡ View demo:** [ts-mui-starter.netlify.app](https://ts-mui-starter.netlify.app/)
 
@@ -36,16 +36,16 @@ npm install -g @stackbit/cli
 stackbit dev
 ```
 
-This outputs your own Netlify Create URL. Open this, register or sign in, and you will be directed to Netlify Create's visual editor for your new project.
+This outputs your own Netlify visual editor URL. Open this, register, or sign in, and you will be directed to the Netlify visual editor for your new project.
 
 ![Next.js Dev + Netlify Create Dev](https://assets.stackbit.com/docs/next-dev-stackbit-dev.png)
 
 ## Next Steps
 
-Here are a few suggestions on what to do next if you're new to Netlify Create:
+Here are a few suggestions on what to do next if you're new to Netlify visual editor:
 
-- Learn [how Netlify Create works](https://docs.netlify.com/create/concepts/how-create-works/)
-- Follow the [_Getting Started_ tutorial](https://docs.netlify.com/create/get-started/nextjs-markdown/)
+- Learn [how Netlify visual editor works](https://docs.netlify.com/create/concepts/how-create-works/)
+- Check [Netlify visual editor reference documentation](https://visual-editor-reference.netlify.com/)
 
 ## Support
 
