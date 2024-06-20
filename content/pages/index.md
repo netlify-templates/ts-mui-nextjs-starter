@@ -8,17 +8,17 @@ sections:
     text: >
       This is the HeroSection component. You can visually edit this component &
       add more sections while developing locally. [Learn
-      more.](https://docs.netlify.com/create/features/local-development)
+      more.](https://docs.netlify.com/visual-editor/local-development/)
     actions:
       - type: Button
         label: Start Building
-        url: 'https://docs.netlify.com/create/quickstart'
+        url: 'https://docs.netlify.com/visual-editor/get-started/'
         size: large
         variant: contained
         color: primary
       - type: Button
         label: Read the Docs
-        url: 'https://docs.netlify.com/create/overview'
+        url: 'https://docs.netlify.com/visual-editor/overview/'
         size: large
         variant: outlined
         color: primary
@@ -44,7 +44,7 @@ sections:
         actions:
           - type: Button
             label: Read the Docs
-            url: 'https://docs.netlify.com/create/overview'
+            url: 'https://docs.netlify.com/visual-editor/overview/'
       - type: Card
         title: Second Card Title
         image:
@@ -59,7 +59,7 @@ sections:
         actions:
           - type: Button
             label: Read the Docs
-            url: 'https://docs.netlify.com/create/overview'
+            url: 'https://docs.netlify.com/visual-editor/overview/'
       - type: Card
         title: Third Card Title
         image:
@@ -74,5 +74,5 @@ sections:
         actions:
           - type: Button
             label: Read the Docs
-            url: 'https://docs.netlify.com/create/overview'
+            url: 'https://docs.netlify.com/visual-editor/overview/'
 ---
