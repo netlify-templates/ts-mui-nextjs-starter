@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import path from 'path';
-import glob from 'glob';
+import { globSync } from "glob";
 import frontmatter from 'front-matter';
 import * as types from 'types';
 
@@ -12,7 +12,7 @@ const supportedFileTypes = ['md', 'json'];
 
 function contentFilesInPath(dir: string) {
     const globPattern = `${dir}/**/*.{${supportedFileTypes.join(',')}}`;
-    return glob.sync(globPattern);
+    return globSync(globPattern);
 }
 
 function readContent(file: string): types.Document {
