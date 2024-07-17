@@ -6,6 +6,12 @@ This is a minimal starting point for new Netlify projects with visual editing. I
 
 **⚡ View demo:** [ts-mui-starter.netlify.app](https://ts-mui-starter.netlify.app/)
 
+## Deploying to Netlify
+
+If you click "Deploy to Netlify" button, it will create a new repo for you that looks exactly like this one, and sets that repo up immediately for deployment on Netlify.
+
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/netlify-templates/ts-mui-nextjs-starter)
+
 ## Features
 
 This is meant to be a simple starting point that demonstrates the use of bringing your own component library, such as MUI.
