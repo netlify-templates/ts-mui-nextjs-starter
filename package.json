@@ -40,6 +40,5 @@
     },
     "description": "A Nextjs page builder, component library and data source mapper all in one.",
     "main": "next.config.js",
-    "license": "MIT",
-    "type": "module"
+    "license": "MIT"
 }
