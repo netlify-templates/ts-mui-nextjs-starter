@@ -6,7 +6,7 @@ export const Config: Model = {
     label: 'Site configuration',
     singleInstance: true,
     filePath: 'content/data/config.json',
-    readOnly: true,
+    canDelete: false,
     fields: [
         { type: 'image', name: 'favicon', label: 'Favicon', default: 'https://assets.stackbit.com/components/images/default/favicon.svg' },
         { type: 'model', name: 'header', label: 'Header configuration', models: ['Header'] },

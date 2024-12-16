@@ -6,7 +6,7 @@ export const ThemeStyle: Model =  {
     label: 'Theme Style',
     singleInstance: true,
     filePath: 'content/data/style.json',
-    readOnly: true,
+    canDelete: false,
     fields: [
         {
             type: 'enum',

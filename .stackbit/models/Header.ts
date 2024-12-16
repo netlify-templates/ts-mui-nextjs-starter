@@ -5,7 +5,6 @@ export const Header: Model = {
     name: 'Header',
     label: 'Header',
     labelField: 'title',
-    readOnly: true,
     fields: [
         { type: 'string', name: 'title', label: 'Title', default: 'Your Brand' },
         {
