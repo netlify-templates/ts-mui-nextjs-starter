@@ -27,7 +27,7 @@
     "devDependencies": {
         "@stackbit/cms-git": "^1.0.2",
         "@stackbit/types": "^2.0.2",
-        "@types/glob": "^8.1.0",
+        "@types/glob": "^9.0.0",
         "@types/js-yaml": "^4.0.9",
         "@types/node": "^22.13.14",
         "@types/react": "^19.0.1",
