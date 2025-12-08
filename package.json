@@ -29,7 +29,7 @@
         "@stackbit/types": "^2.0.2",
         "@types/glob": "^9.0.0",
         "@types/js-yaml": "^4.0.9",
-        "@types/node": "^22.13.14",
+        "@types/node": "^24.0.0",
         "@types/react": "^19.0.1",
         "autoprefixer": "^10.4.19",
         "eslint": "^9.0.0",
