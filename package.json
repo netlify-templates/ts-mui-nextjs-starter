@@ -20,25 +20,23 @@
         "glob": "^10.4.2",
         "js-yaml": "^4.1.0",
         "markdown-to-jsx": "^7.7.1",
-        "next": "^16.0.8",
+        "next": "^16.1.6",
         "react": "^19.2.1",
         "react-dom": "^19.2.1"
     },
     "devDependencies": {
-        "@stackbit/cms-git": "^1.0.2",
-        "@stackbit/types": "^2.0.2",
         "@types/glob": "^9.0.0",
         "@types/js-yaml": "^4.0.9",
         "@types/node": "^22.13.14",
         "@types/react": "^19.0.1",
         "autoprefixer": "^10.4.19",
         "eslint": "^9.0.0",
-        "eslint-config-next": "^16.0.7",
+        "eslint-config-next": "^16.1.6",
         "eslint-config-prettier": "^9.1.0",
         "prettier": "^3.3.2",
         "typescript": "^5.4.5"
     },
-    "description": "A Nextjs page builder, component library and data source mapper all in one.",
+    "description": "A Next.js starter with TypeScript and Material-UI",
     "main": "next.config.js",
     "license": "MIT"
 }

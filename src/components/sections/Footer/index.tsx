@@ -6,23 +6,22 @@ import { Markdown } from '../../atoms/Markdown';
 import MuiBox from '@mui/material/Box';
 import MuiTypography from '@mui/material/Typography';
 
-type Props = types.Footer & types.StackbitObjectId;
+type Props = types.Footer;
 
 export const Footer: React.FC<Props> = (props) => {
-    const { navLinks = [], copyrightText, 'data-sb-object-id': objectId } = props;
-    const fieldPath = objectId ? `${objectId}:footer` : null;
+    const { navLinks = [], copyrightText } = props;
     return (
-        <MuiBox component="footer" sx={{ alignItems: 'center', display: 'flex', flexWrap: 'wrap', py: 3 }} data-sb-field-path={fieldPath}>
+        <MuiBox component="footer" sx={{ alignItems: 'center', display: 'flex', flexWrap: 'wrap', py: 3 }}>
             {navLinks.length > 0 && (
-                <MuiBox component="nav" sx={{ display: 'flex', flexGrow: 1, flexWrap: 'wrap' }} data-sb-field-path=".navLinks">
+                <MuiBox component="nav" sx={{ display: 'flex', flexGrow: 1, flexWrap: 'wrap' }}>
                     {navLinks.map((link, index) => (
-                        <Link key={index} {...link} sx={{ mr: 2 }} data-sb-field-path={`.${index}`} />
+                        <Link key={index} {...link} sx={{ mr: 2 }} />
                     ))}
                 </MuiBox>
             )}
             {copyrightText && (
                 <MuiTypography component="div" color="text.secondary">
-                    <Markdown text={copyrightText} data-sb-field-path=".copyrightText" />
+                    <Markdown text={copyrightText} />
                 </MuiTypography>
             )}
         </MuiBox>
