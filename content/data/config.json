@@ -19,7 +19,7 @@
             {
                 "type": "Link",
                 "label": "Documentation",
-                "url": "https://docs.netlify.com/visual-editor/overview/",
+                "url": "https://docs.netlify.com/build/frameworks/framework-setup-guides/nextjs/overview/",
                 "underline": "hover"
             }
         ]
@@ -43,7 +43,7 @@
                 "type": "Link",
                 "label": "Documentation",
                 "underline": "hover",
-                "url": "https://docs.netlify.com/visual-editor/overview/"
+                "url": "https://docs.netlify.com/build/frameworks/framework-setup-guides/nextjs/overview/"
             }
         ]
     }
