@@ -29,8 +29,7 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx",
-    "stackbit.config.ts"
+    "**/*.tsx"
   ],
   "exclude": [
     "node_modules"
